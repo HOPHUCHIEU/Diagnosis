@@ -1,0 +1,40 @@
+export const HTTP_STATUS_MESSAGES = {
+  200: 'OK',
+  201: 'Created',
+  202: 'Accepted',
+  203: 'NonAuthoritativeInfo',
+  204: 'NoContent',
+  205: 'ResetContent',
+  206: 'PartialContent',
+  301: 'Move Permanently',
+  302: 'Found',
+  304: 'Not Modified',
+  307: 'Temporary Redirect',
+  308: 'Permanent Redirect',
+  400: 'Bad Request',
+  401: 'Unauthorized',
+  403: 'Forbidden',
+  404: 'Not Found',
+  405: 'Method Not Allowed',
+  406: 'Not Acceptable',
+  409: 'Conflict',
+  413: 'Payload Too Large',
+  414: 'URI Too Large',
+  415: 'Unsupported Media Type',
+  422: 'Unprocessable Entity',
+  429: 'Too Many Requests',
+  500: 'Internal Server Error',
+  501: 'Not Implemented',
+  502: 'Bad Gateway',
+  503: 'Service Unavailable',
+  504: 'Gateway Timeout'
+}
+
+export const HTTP_ERROR_MESSAGES = {
+  ALREADY_EXISTS: 'ALREADY_EXISTS',
+  NOT_FOUND: 'NOT_FOUND',
+  BAD_REQUEST: 'BAD_REQUEST',
+  UNAUTHORIZED: 'UNAUTHORIZED',
+  FORBIDDEN: 'FORBIDDEN',
+  INTERNAL_SERVER_ERROR: 'INTERNAL_SERVER_ERROR'
+}

@@ -1,0 +1,111 @@
+{
+  "header": {
+    "login": "Đăng nhập",
+    "home": "Trang chủ",
+    "about": "Giới thiệu",
+    "contact": "Liên hệ",
+    "FAQ": "FAQ",
+    "appointment": "Đặt lịch",
+    "blog": "Tin tức y tế",
+    "logout": "Đăng xuất",
+    "services": "Dịch vụ",
+    "register": "Đăng ký"
+  },
+  "homepage": {
+    "title": "ĐÂY LÀ TRANG CHỦ"
+  },
+  "footer": {
+    "DN": "120 Hoàng Minh Thảo, Đà Nẵng",
+    "Hotline": "Hotline: 0356241423",
+    "AI": "Diagnosis IQ: Hệ thống hỗ trợ quyết định lâm sàng thông minh cho quản lý bệnh viện tự động.",
+    "about": "Về Diagnosis IQ"
+  },
+  "user": {
+    "profile": "Hồ sơ",
+    "history": "Lịch sử khám",
+    "payment": "Thanh toán",
+    "dashboard": "Bảng điều khiển"
+  },
+  "hero": {
+    "title": {
+      "make": "Đặt lịch khám",
+      "easy": "dễ dàng",
+      "and": "và",
+      "fast": "nhanh chóng"
+    },
+    "subtitle": "Chăm sóc sức khỏe gia đình bạn với đội ngũ bác sĩ chuyên nghiệp cùng cơ sở vật chất hiện đại và đầy đủ."
+  },
+  "advantages": {
+    "title": "Ưu điểm của chúng tôi",
+    "items": {
+      "appointment": "Đặt lịch khám",
+      "telemedicine": "Tư vấn từ xa",
+      "aiAssistant": "Trợ lý AI",
+      "dashboard": "Bảng theo dõi thông minh"
+    }
+  },
+  "consultant": {
+    "title": "Tư vấn",
+    "subtitle": "Chẩn đoán nhanh, đặt lịch ngay!"
+  },
+  "quality": {
+    "title": {
+      "start": "Dịch vụ",
+      "highlight": "Chất lượng cao",
+      "end": "cho gia đình bạn"
+    },
+    "description": "Đội ngũ bác sĩ giỏi nhất cùng với cơ sở vật chất đầy đủ và hiện đại sẽ giúp bạn luôn khỏe mạnh hoặc phục hồi sức khỏe khi đau ốm."
+  },
+  "auth": {
+    "signIn": {
+      "title": "Đăng nhập",
+      "withGoogle": "Bạn có thể đăng nhập bằng tài khoản Google",
+      "withAccount": "hoặc bằng tài khoản DiagnosisIQ của mình",
+      "email": "Email",
+      "password": "Mật khẩu",
+      "forgotPassword": "Quên mật khẩu?",
+      "noAccount": "Chưa có tài khoản?",
+      "registerNow": "Đăng ký ngay"
+    },
+    "signUp": {
+      "title": "Đăng ký tài khoản",
+      "subtitle": "Tạo tài khoản của bạn",
+      "email": "Email",
+      "phone": "Số điện thoại",
+      "firstName": "Tên",
+      "lastName": "Họ",
+      "password": "Mật khẩu",
+      "confirmPassword": "Xác nhận mật khẩu",
+      "register": "Đăng ký",
+      "haveAccount": "Đã có tài khoản?",
+      "signIn": "Đăng nhập"
+    },
+    "forgotPassword": {
+      "title": "Quên mật khẩu",
+      "subtitle": "Nhập email của bạn và chúng tôi sẽ gửi hướng dẫn để đặt lại mật khẩu",
+      "email": "Email",
+      "emailPlaceholder": "Nhập email của bạn",
+      "sendRequest": "Gửi yêu cầu đặt lại",
+      "backToLogin": "Quay lại đăng nhập",
+      "checkEmail": "Kiểm tra email của bạn",
+      "emailSent": "Chúng tôi đã gửi email với hướng dẫn đặt lại mật khẩu đến",
+      "noEmail": "Nếu bạn không nhận được email, vui lòng kiểm tra thư mục spam hoặc thử lại.",
+      "tryAgain": "Thử lại với email khác",
+      "backToSignIn": "Quay lại đăng nhập"
+    },
+    "verifyEmail": {
+      "title": "Xác thực email",
+      "description": "Chúng tôi đã gửi mã xác thực đến email của bạn",
+      "instruction": "Vui lòng kiểm tra và nhập mã xác thực",
+      "codeRequired": "Vui lòng nhập mã xác thực",
+      "codeLength": "Mã xác thực phải có 6 ký tự",
+      "verifyButton": "Xác thực",
+      "resendCode": "Gửi lại mã",
+      "resendCodeTimer": "Gửi lại mã ",
+      "successTitle": "{email} đã được xác thực!",
+      "successMessage": "Bạn có thể đăng nhập ngay bây giờ",
+      "resendSuccess": "Đã gửi lại mã xác thực",
+      "resendError": "Không thể gửi lại mã. Vui lòng thử lại sau"
+    }
+  }
+}

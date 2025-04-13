@@ -1,0 +1,111 @@
+{
+  "header": {
+    "login": "Sign In",
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "FAQ": "FAQ",
+    "appointment": "Appointment",
+    "blog": "Blog",
+    "logout": "Logout",
+    "services": "Services",
+    "register": "Register"
+  },
+  "homepage": {
+    "title": "THIS IS HOME PAGE"
+  },
+  "footer": {
+    "DN": "120 Hoang Minh Thao, Da Nang",
+    "Hotline": "Hotline: 0356241423",
+    "AI": "Diagnosis IQ: An intelligent clinical decision support system for automatic hospital management.",
+    "about": "About Diagnosis IQ"
+  },
+  "user": {
+    "profile": "Profile",
+    "history": "History",
+    "payment": "Payment",
+    "dashboard": "Dashboard"
+  },
+  "hero": {
+    "title": {
+      "make": "Make an appointment",
+      "easy": "easy",
+      "and": "and",
+      "fast": "fast"
+    },
+    "subtitle": "Checking your family health by professional team doctors with complete and modern facilities services."
+  },
+  "advantages": {
+    "title": "Our Advantages",
+    "items": {
+      "appointment": "Make an appointment",
+      "telemedicine": "Telemedicine",
+      "aiAssistant": "AI Health Assistant",
+      "dashboard": "Smart Clinical Dashboard"
+    }
+  },
+  "consultant": {
+    "title": "Consultant",
+    "subtitle": "Quick Diagnosis, Instant Booking!"
+  },
+  "quality": {
+    "title": {
+      "start": "The",
+      "highlight": "Best Quality",
+      "end": "Service For Your Family"
+    },
+    "description": "Our best team doctor with complete and modern facilities will keep you healthy or return you to health from sick."
+  },
+  "auth": {
+    "signIn": {
+      "title": "Sign In",
+      "withGoogle": "You can sign in with your Google account",
+      "withAccount": "or with your DiagnosisIQ account",
+      "email": "Email",
+      "password": "Password",
+      "forgotPassword": "Forgot password?",
+      "noAccount": "Don't have an account?",
+      "registerNow": "Register Now"
+    },
+    "signUp": {
+      "title": "Register for a Participant Account",
+      "subtitle": "Create your Account",
+      "email": "Email",
+      "phone": "Phone Number",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "register": "Register",
+      "haveAccount": "Already have an account?",
+      "signIn": "Sign In"
+    },
+    "forgotPassword": {
+      "title": "Forgot Password",
+      "subtitle": "Enter your email and we'll send instructions to reset your password",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email",
+      "sendRequest": "Send Reset Request",
+      "backToLogin": "Back to login",
+      "checkEmail": "Check your email",
+      "emailSent": "We've sent an email with password reset instructions to",
+      "noEmail": "If you don't receive an email, please check your spam folder or try again.",
+      "tryAgain": "Try with another email",
+      "backToSignIn": "Back to sign in"
+    },
+    "verifyEmail": {
+      "title": "Email Verification",
+      "description": "We've sent a verification code to your email",
+      "instruction": "Please check and enter the verification code",
+      "codeRequired": "Please enter the verification code",
+      "codeLength": "Verification code must be 6 characters",
+      "verifyButton": "Verify",
+      "resendCode": "Resend code",
+      "resendCodeTimer": "Resend code",
+      "successTitle": "Email verified successfully!",
+      "successMessage": "You can now sign in",
+      "resendSuccess": "Verification code has been sent",
+      "resendError": "Couldn't resend code. Please try again later"
+    }
+  }
+}

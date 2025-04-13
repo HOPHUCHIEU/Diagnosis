@@ -1,0 +1,134 @@
+/* nprogess */
+#nprogress .bar {
+  background: linear-gradient(90deg, #164eac 0%, #65dbe3 100%) !important;
+}
+
+#nprogress .peg {
+  box-shadow:
+    0 0 10px #164eac,
+    0 0 5px #65dbe3 !important;
+}
+
+#nprogress .spinner-icon {
+  border-top-color: #164eac !important;
+  border-left-color: #65dbe3 !important;
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 80px;
+  aspect-ratio: 1;
+  border: 10px solid #000;
+  box-sizing: border-box;
+  background:
+    radial-gradient(farthest-side, #fff 98%, #0000) top,
+    radial-gradient(farthest-side, #fff 98%, #0000) top,
+    radial-gradient(farthest-side, #fff 98%, #0000) left,
+    radial-gradient(farthest-side, #fff 98%, #0000) right,
+    radial-gradient(farthest-side, #fff 98%, #0000) bottom,
+    #000;
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  filter: blur(4px) contrast(10);
+  animation: l19 1s infinite;
+}
+
+@keyframes l19 {
+  0% {
+    background-position: top, top, left, right, bottom;
+  }
+
+  25% {
+    background-position: right, top, left, right, bottom;
+  }
+
+  50% {
+    background-position: bottom, top, left, right, bottom;
+  }
+
+  75% {
+    background-position: left, top, left, right, bottom;
+  }
+
+  100% {
+    background-position: top, top, left, right, bottom;
+  }
+}
+
+
+/* Zalo zoomzoom */
+.zalozoomzoom {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  opacity: 0.5;
+  z-index: -2;
+  border-radius: 100%;
+  animation: zalozoomzoom 3s linear 0.2s infinite;
+}
+
+.zalozoomzoom:nth-child(1) {
+  animation-delay: 1.2s;
+}
+
+.zalozoomzoom:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.zalozoomzoom:nth-child(3) {
+  animation-delay: 1.5s;
+}
+
+.zalozoomzoom:nth-child(4) {
+  animation-delay: 2.2s;
+}
+
+@keyframes zalozoomzoom {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+
+/* print */
+@media print {
+  @page {
+    margin: 20mm;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  .print-content,
+  .print-content * {
+    visibility: visible;
+  }
+
+  .print-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+
+  .print\:hidden {
+    display: none;
+  }
+
+  .print\:block {
+    display: block;
+  }
+
+  .print\:p-8 {
+    padding: 2rem;
+  }
+}
