@@ -1,0 +1,160 @@
+networks:
+  diagnosis-network:
+    name: 'diagnosis-network'
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16
+          ip_range: 172.28.0.0/24
+          gateway: 172.28.0.1
+          aux_addresses:
+            mongodb: 172.28.0.2
+            api: 172.28.0.3
+            nginx: 172.28.0.4
+            portainer: 172.28.0.5
+            kafka: 172.28.0.6
+            zookeeper: 172.28.0.7
+
+volumes:
+  portainer-data:
+  mongodb-data:
+
+services:
+  zookeeper:
+    image: 'bitnami/zookeeper:latest'
+    container_name: 'zookeeper-diagnosis'
+    ports:
+      - 2181:2181
+    networks:
+      - diagnosis-network
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+
+  kafka:
+    image: bitnami/kafka:latest
+    container_name: 'kafka-diagnosis'
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "kafka-topics.sh --list --bootstrap-server localhost:9092" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    ports:
+      - 9092:9092
+    networks:
+      - diagnosis-network
+    depends_on:
+      - zookeeper
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka-diagnosis:9092
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT
+      - KAFKA_DELETE_TOPIC_ENABLE=true
+      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
+      - KAFKA_METADATA_LOG_DIR=/bitnami/kafka/data
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '1'
+
+  # chatbot:
+  #   build:
+  #     context: ./apps/chatbot-service
+  #     dockerfile: Dockerfile
+  #   depends_on:
+  #     - kafka
+  #   environment:
+  #     - KAFKA_BROKERS=kafka:9092
+
+  portainer:
+      image: portainer/portainer-ce:latest
+      container_name: portainer
+      restart: unless-stopped
+      privileged: true
+      security_opt:
+        - no-new-privileges:false
+      volumes:
+        - /etc/localtime:/etc/localtime:ro
+        - /var/run/docker.sock:/var/run/docker.sock:ro
+        - portainer-data:/data
+      ports:
+        - "9999:9000"
+      networks:
+        - diagnosis-network
+      deploy:
+        resources:
+          limits:
+            cpus: '0.5'
+            memory: 512M
+          reservations:
+            cpus: '0.25'
+            memory: 256M
+
+  api:
+    image: viethung20101/diagnosis-api:latest
+    build:
+      context: ..
+      dockerfile: ./apps/api-service/Dockerfile
+    container_name: diagnosis-api
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env.docker
+    networks:
+      - diagnosis-network
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '1'
+
+  mongodb:
+    image: mongo:latest
+    container_name: diagnosis-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - diagnosis-network
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+
+  app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '8999:81'
+      - '443:443'
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+    networks:
+      - diagnosis-network
