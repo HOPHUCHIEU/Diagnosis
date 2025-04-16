@@ -13,7 +13,7 @@ import { PatientRecordModule } from './patient-record/patient-record.module'
 import { DoctorProfileModule } from './account/doctor-profile/doctor-profile.module'
 import { AddressModule } from 'apps/api-service/src/account/address/address.module'
 import { AppointmentModule } from './appointment/appointment.module'
-import { PaymentModule } from './payment/payment.module'
+// import { PaymentModule } from './payment/payment.module'
 import { ReviewModule } from './review/review.module'
 import { WorkScheduleModule } from './work-schedule/work-schedule.module'
 import { AppointmentPackageModule } from './appointment-package/appointment-package.module'
@@ -36,7 +36,7 @@ import { ChatbotModule } from './chatbot/chatbot.module'
     PatientRecordModule,
     DoctorProfileModule,
     AppointmentModule,
-    PaymentModule,
+    // PaymentModule,
     ReviewModule,
     WorkScheduleModule,
     AppointmentPackageModule,
