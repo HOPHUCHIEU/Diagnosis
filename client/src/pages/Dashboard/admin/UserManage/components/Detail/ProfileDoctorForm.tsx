@@ -1,0 +1,545 @@
+import { useEffect } from 'react'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import {
+  useGetDoctorProfileQuery,
+  useCreateDoctorProfileMutation,
+  useUpdateDoctorProfileMutation
+} from '@/redux/services/doctorApi'
+import { toast } from 'react-toastify'
+import { CustomNotification } from '@/components/CustomReactToastify'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { format } from 'date-fns'
+import { User } from '@/types/user.type'
+import { doctorProfileSchema, type DoctorProfileSchema } from '@/utils/rules'
+import { bufferToHex } from '@/utils/utils'
+import { Textarea } from '@/components/ui/textarea'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Card, CardContent } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
+import { PlusCircle, X } from 'lucide-react'
+import { CreateDoctorProfileInput } from '@/types/doctor.type'
+import { LANGUAGES, SPECIALTIES } from '@/constants/schedules.doctor'
+
+interface Props {
+  user: User
+  onClose?: () => void
+}
+
+export default function ProfileDoctorForm({ user, onClose }: Props) {
+  const { data: doctorProfile, isLoading: isLoadingProfile } = useGetDoctorProfileQuery(
+    bufferToHex(user.doctorProfileId),
+    { refetchOnMountOrArgChange: true }
+  )
+  const [createProfile, { isLoading: isCreating }] = useCreateDoctorProfileMutation()
+  const [updateProfile, { isLoading: isUpdating }] = useUpdateDoctorProfileMutation()
+
+  const form = useForm<DoctorProfileSchema>({
+    resolver: yupResolver(doctorProfileSchema),
+    defaultValues: {
+      licenseNumber: '',
+      specialties: [],
+      yearsOfExperience: 0,
+      education: [
+        {
+          degree: '',
+          university: '',
+          graduationYear: new Date().getFullYear(),
+          specialization: ''
+        }
+      ],
+      certificates: [],
+      languages: ['Tiếng Việt'],
+      biography: '',
+      achievements: [],
+      consultationFee: 0,
+      isAvailable: true,
+      profileImage: null
+    }
+  })
+
+  useEffect(() => {
+    if (doctorProfile?.data) {
+      // Reset form with existing profile data
+      form.reset({
+        licenseNumber: doctorProfile.data.licenseNumber,
+        specialties: doctorProfile.data.specialties,
+        yearsOfExperience: doctorProfile.data.yearsOfExperience,
+        education: doctorProfile.data.education,
+        certificates: doctorProfile.data.certificates,
+        languages: doctorProfile.data.languages,
+        biography: doctorProfile.data.biography,
+        achievements: doctorProfile.data.achievements,
+        consultationFee: doctorProfile.data.consultationFee,
+        isAvailable: doctorProfile.data.isAvailable,
+        profileImage: doctorProfile.data.profileImage || null
+      })
+    }
+  }, [doctorProfile, form])
+
+  const onSubmit = async (data: DoctorProfileSchema) => {
+    try {
+      if (doctorProfile?.data) {
+        // Update existing profile
+        const formData = { ...data, doctorId: bufferToHex(user._id) }
+        await updateProfile({
+          data: formData as CreateDoctorProfileInput
+        }).unwrap()
+
+        toast.success(CustomNotification, {
+          data: {
+            title: 'Thành công!',
+            content: 'Cập nhật hồ sơ bác sĩ thành công'
+          }
+        })
+      } else {
+        // Create new profile
+        await createProfile({
+          ...(data as CreateDoctorProfileInput),
+          doctorId: bufferToHex(user._id)
+        }).unwrap()
+
+        toast.success(CustomNotification, {
+          data: {
+            title: 'Thành công!',
+            content: 'Tạo hồ sơ bác sĩ thành công'
+          }
+        })
+      }
+      onClose?.()
+    } catch (error: any) {
+      console.log('error', error)
+    }
+  }
+
+  if (isLoadingProfile) {
+    return (
+      <div className='flex items-center justify-center min-h-[200px]'>
+        <div className='w-8 h-8 rounded-full border-b-2 animate-spin border-primary'></div>
+      </div>
+    )
+  }
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
+        <FormField
+          control={form.control}
+          name='licenseNumber'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Số giấy phép</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <div className='grid grid-cols-2 gap-4'>
+          <FormField
+            control={form.control}
+            name='yearsOfExperience'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Số năm kinh nghiệm</FormLabel>
+                <FormControl>
+                  <Input
+                    max={100}
+                    maxLength={2}
+                    type='number'
+                    {...field}
+                    onChange={(e) => field.onChange(+e.target.value)}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name='consultationFee'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Phí tư vấn (VNĐ)</FormLabel>
+                <FormControl>
+                  <Input type='number' {...field} onChange={(e) => field.onChange(+e.target.value)} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <FormField
+          control={form.control}
+          name='specialties'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Chuyên khoa</FormLabel>
+              <FormControl>
+                <Select onValueChange={(value) => field.onChange([...field.value, value])} value={field.value?.[0]}>
+                  <SelectTrigger>
+                    <SelectValue placeholder='Chọn chuyên khoa' />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {SPECIALTIES.filter((specialty) => !field.value.includes(specialty)).map((specialty) => (
+                      <SelectItem key={specialty} value={specialty}>
+                        {specialty}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <div className='flex flex-wrap gap-2 mt-2'>
+                {field.value?.map((specialty, index) => (
+                  <Button
+                    key={specialty}
+                    effect='shine'
+                    size='sm'
+                    onClick={() => {
+                      const newSpecialties = [...field.value]
+                      newSpecialties.splice(index, 1)
+                      field.onChange(newSpecialties)
+                    }}
+                  >
+                    {specialty} ×
+                  </Button>
+                ))}
+              </div>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name='biography'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Tiểu sử</FormLabel>
+              <FormControl>
+                <Textarea {...field} className='min-h-[100px]' placeholder='Nhập tiểu sử bác sĩ...' />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <Separator className='my-6' />
+
+        {/* Education Section */}
+        <div className='space-y-8'>
+          <div className='flex justify-between items-center'>
+            <h3 className='text-lg font-semibold'>Học vấn</h3>
+            <Button
+              type='button'
+              variant='outline'
+              size='sm'
+              onClick={() => {
+                const currentEducation = form.getValues('education')
+                form.setValue('education', [
+                  ...currentEducation,
+                  { degree: '', university: '', graduationYear: new Date().getFullYear(), specialization: '' }
+                ])
+              }}
+            >
+              <PlusCircle className='mr-2 w-4 h-4' />
+              Thêm học vấn
+            </Button>
+          </div>
+
+          {form.watch('education').map((_, index) => (
+            <Card key={index}>
+              <CardContent className='pt-2 pb-8'>
+                <div className='flex justify-end'>
+                  <Button
+                    type='button'
+                    variant='ghost'
+                    size='icon'
+                    onClick={() => {
+                      const education = form.getValues('education')
+                      education.splice(index, 1)
+                      form.setValue('education', education)
+                    }}
+                  >
+                    <X className='w-4 h-4' />
+                  </Button>
+                </div>
+                <div className='grid gap-4 md:grid-cols-2'>
+                  <FormField
+                    control={form.control}
+                    name={`education.${index}.degree`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Bằng cấp</FormLabel>
+                        <FormControl>
+                          <Input {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name={`education.${index}.university`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Trường</FormLabel>
+                        <FormControl>
+                          <Input {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name={`education.${index}.graduationYear`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Năm tốt nghiệp</FormLabel>
+                        <FormControl>
+                          <Input type='number' {...field} onChange={(e) => field.onChange(+e.target.value)} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name={`education.${index}.specialization`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Chuyên ngành</FormLabel>
+                        <FormControl>
+                          <Input {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        <Separator className='my-6' />
+
+        {/* Certificates Section */}
+        <div className='space-y-8'>
+          <div className='flex justify-between items-center'>
+            <h3 className='text-lg font-semibold'>Chứng chỉ</h3>
+            <Button
+              type='button'
+              variant='outline'
+              size='sm'
+              onClick={() => {
+                const currentCertificates = form.getValues('certificates')
+                form.setValue('certificates', [
+                  ...currentCertificates,
+                  {
+                    name: '',
+                    issuedBy: '',
+                    issueDate: new Date().toISOString(),
+                    expiryDate: new Date().toISOString()
+                  }
+                ])
+              }}
+            >
+              <PlusCircle className='mr-2 w-4 h-4' />
+              Thêm chứng chỉ
+            </Button>
+          </div>
+
+          {form.watch('certificates').map((_, index) => (
+            <Card key={index}>
+              <CardContent className='pt-2 pb-8'>
+                <div className='flex justify-end'>
+                  <Button
+                    type='button'
+                    variant='ghost'
+                    size='icon'
+                    onClick={() => {
+                      const certificates = form.getValues('certificates')
+                      certificates.splice(index, 1)
+                      form.setValue('certificates', certificates)
+                    }}
+                  >
+                    <X className='w-4 h-4' />
+                  </Button>
+                </div>
+                <div className='grid gap-4 md:grid-cols-2'>
+                  <FormField
+                    control={form.control}
+                    name={`certificates.${index}.name`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Tên chứng chỉ</FormLabel>
+                        <FormControl>
+                          <Input {...field} placeholder='Ví dụ: Chứng chỉ chuyên khoa Tim mạch' />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name={`certificates.${index}.issuedBy`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Nơi cấp</FormLabel>
+                        <FormControl>
+                          <Input {...field} placeholder='Ví dụ: Bộ Y tế' />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name={`certificates.${index}.issueDate`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Ngày cấp</FormLabel>
+                        <FormControl>
+                          <Input
+                            type='date'
+                            {...field}
+                            value={field.value ? format(new Date(field.value), 'yyyy-MM-dd') : ''}
+                            onChange={(e) => field.onChange(new Date(e.target.value).toISOString())}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name={`certificates.${index}.expiryDate`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Ngày hết hạn</FormLabel>
+                        <FormControl>
+                          <Input
+                            type='date'
+                            {...field}
+                            value={field.value ? format(new Date(field.value), 'yyyy-MM-dd') : ''}
+                            onChange={(e) => field.onChange(new Date(e.target.value).toISOString())}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        <Separator className='my-6' />
+
+        {/* Languages Section */}
+        <FormField
+          control={form.control}
+          name='languages'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Ngôn ngữ</FormLabel>
+              <FormControl>
+                <Select onValueChange={(value) => field.onChange([...field.value, value])}>
+                  <SelectTrigger>
+                    <SelectValue placeholder='Chọn ngôn ngữ' />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {LANGUAGES.filter((lang) => !field.value.includes(lang)).map((lang) => (
+                      <SelectItem key={lang} value={lang}>
+                        {lang}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <div className='flex flex-wrap gap-2 mt-2'>
+                {field.value?.map((lang, index) => (
+                  <Button
+                    key={lang}
+                    effect='shine'
+                    size='sm'
+                    onClick={() => {
+                      const newLanguages = [...field.value]
+                      newLanguages.splice(index, 1)
+                      field.onChange(newLanguages)
+                    }}
+                  >
+                    {lang} ×
+                  </Button>
+                ))}
+              </div>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <Separator className='my-6' />
+
+        {/* Achievements Section */}
+        <FormField
+          control={form.control}
+          name='achievements'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Thành tựu</FormLabel>
+              <FormControl>
+                <div className='space-y-2'>
+                  <Input
+                    placeholder='Nhập thành tựu và nhấn Enter để thêm'
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault()
+                        const target = e.target as HTMLInputElement
+                        if (target.value.trim()) {
+                          field.onChange([...field.value, target.value.trim()])
+                          target.value = ''
+                        }
+                      }
+                    }}
+                  />
+                  <div className='flex flex-wrap gap-2 mt-2'>
+                    {field.value?.map((achievement, index) => (
+                      <Button
+                        key={index}
+                        variant='secondary'
+                        size='sm'
+                        onClick={() => {
+                          const newAchievements = [...field.value]
+                          newAchievements.splice(index, 1)
+                          field.onChange(newAchievements)
+                        }}
+                      >
+                        {achievement} ×
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <div className='flex gap-4 justify-center'>
+          <Button effect='ringHover' className='min-w-[150px]' type='submit' disabled={isCreating || isUpdating}>
+            {isCreating || isUpdating ? 'Đang xử lý...' : doctorProfile?.data ? 'Cập nhật hồ sơ' : 'Tạo hồ sơ'}
+          </Button>
+        </div>
+      </form>
+    </Form>
+  )
+}

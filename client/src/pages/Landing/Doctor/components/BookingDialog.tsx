@@ -11,6 +11,7 @@ import { useAppSelector } from '@/redux/store'
 import { bufferToHex } from '@/utils/utils'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import BuyPackageDialog from '@/pages/Dashboard/user/AppointmentStats/components/BuyPackageDialog'
+import { useTranslation } from 'react-i18next'
 import { TicketIcon, PlusCircleIcon } from 'lucide-react'
 
 interface Props {

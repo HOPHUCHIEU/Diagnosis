@@ -3,7 +3,7 @@ import { animateScroll as scroll } from 'react-scroll'
 import { useAppSelector } from '@/redux/store'
 import GoogleOneTap from '@/components/Auth/GoogleOneTap'
 import { Header } from './components/Landing/Header'
-import Chatbot from '@/components/Global/Chatbot'
+// import Chatbot from '@/components/Global/Chatbot'
 
 interface Props {
   children?: React.ReactNode
@@ -41,7 +41,7 @@ function DefaultLayoutInner({ children }: Props) {
       {!isAuthen && <GoogleOneTap />}
       <Header />
       <div className='max-w-screen-xl w-full px-6 mx-auto sm:px-10 mt-28 mb-12 lg:mt-[98px]'>{children}</div>
-      <Chatbot />
+      {/* <Chatbot /> */}
     </div>
   )
 }

@@ -24,7 +24,7 @@
     "seed": "ts-node -r tsconfig-paths/register apps/api-service/src/seeder.ts"
   },
   "dependencies": {
-    "@faker-js/faker": "^9.5.0",
+    "@faker-js/faker": "^8.4.1",
     "@nestjs-modules/mailer": "^2.0.2",
     "@nestjs/common": "^11.0.9",
     "@nestjs/config": "^4.0.0",
@@ -32,7 +32,7 @@
     "@nestjs/jwt": "^11.0.0",
     "@nestjs/mapped-types": "*",
     "@nestjs/microservices": "^11.0.9",
-    "@nestjs/mongoose": "^11.0.1",
+    "@nestjs/mongoose": "^11.0.3",
     "@nestjs/passport": "^11.0.5",
     "@nestjs/platform-express": "^11.0.9",
     "@nestjs/platform-socket.io": "^11.0.12",
@@ -47,7 +47,7 @@
     "kafkajs": "^2.2.4",
     "luxon": "^3.5.0",
     "mongodb": "^6.13.0",
-    "mongoose": "^8.10.1",
+    "mongoose": "^8.13.2",
     "nest-winston": "^1.10.2",
     "nestjs-i18n": "^10.5.0",
     "nestjs-seeder": "^0.3.2",

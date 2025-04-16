@@ -7,6 +7,19 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
     ports:
       - "2181:2181"
+  api-service:
+    env_file:
+      - .env.docker
+  diagnosis-mongodb:
+    image: mongo
+    container_name: diagnosis-mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=hophuchieu
+      - MONGO_INITDB_ROOT_PASSWORD=123
+    volumes:
+      - ./data/db:/data/db
 
   kafka:
     image: confluentinc/cp-kafka:latest

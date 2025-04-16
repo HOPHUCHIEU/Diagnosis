@@ -25,7 +25,7 @@ import {
   UserManage,
   WorkSchedule
 } from './pages/Dashboard/admin'
-import VideoRoom from './pages/VideoCall/VideoRoom'
+// import VideoRoom from './pages/VideoCall/VideoRoom'
 
 type ProtectedRouteProps = {
   allowedRole: 'user' | 'admin' | 'doctor'
@@ -137,12 +137,12 @@ const doctorRoutes = [
   }
 ]
 
-const videoCallRoutes = [
-  {
-    path: path.videoRoom,
-    element: <VideoRoom />
-  }
-]
+// const videoCallRoutes = [
+//   {
+//     path: path.videoRoom,
+//     element: <VideoRoom />
+//   }
+// ]
 
 const ProtectedRouteComponent = memo(({ allowedRole }: ProtectedRouteProps) => {
   const { isAuthenticated, roleUser } = useAuth()
@@ -217,11 +217,11 @@ const UseRouteElements = () => {
         element: <ProtectedRouteComponent allowedRole='doctor' />,
         children: doctorRoutes
       },
-      {
-        path: '',
-        element: <NoLayoutComponent />,
-        children: videoCallRoutes
-      },
+      // {
+      //   path: '',
+      //   element: <NoLayoutComponent />,
+      //   children: videoCallRoutes
+      // },
       {
         path: '*',
         element: (
