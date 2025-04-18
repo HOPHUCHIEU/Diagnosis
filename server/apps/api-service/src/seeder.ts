@@ -8,7 +8,7 @@ config()
 
 seeder({
   imports: [
-    MongooseModule.forRoot(process.env.MONGODB_URI || 'mongodb://diagnosis-mongodb:27017/clinic'),
+    MongooseModule.forRoot(process.env.MONGODB_URI || 'mongodb://localhost:27017/clinic'),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }])
   ]
 }).run([UserSeeder])
