@@ -11,7 +11,7 @@ import { workScheduleApi } from './services/workScheduleApi'
 import { publicApi } from './services/publicApi'
 import { appointmentApi } from './services/appointmentApi'
 import { packageApi } from './services/packageApi'
-// import { paymentApi } from './services/paymentApi'
+import { paymentApi } from './services/paymentApi'
 import { reviewApi } from './services/reviewApi'
 // import { chatbotApi } from './services/chatbotApi'
 
@@ -25,7 +25,7 @@ export const store = configureStore({
     [publicApi.reducerPath]: publicApi.reducer,
     [appointmentApi.reducerPath]: appointmentApi.reducer,
     [packageApi.reducerPath]: packageApi.reducer,
-    // [paymentApi.reducerPath]: paymentApi.reducer,
+    [paymentApi.reducerPath]: paymentApi.reducer,
     [reviewApi.reducerPath]: reviewApi.reducer,
     // [chatbotApi.reducerPath]: chatbotApi.reducer,
     errorToast: errorToastSlice,
@@ -41,7 +41,7 @@ export const store = configureStore({
       publicApi.middleware,
       appointmentApi.middleware,
       packageApi.middleware,
-      // paymentApi.middleware,
+      paymentApi.middleware,
       reviewApi.middleware
       // chatbotApi.middleware
     )
