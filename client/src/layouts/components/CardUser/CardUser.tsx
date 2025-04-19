@@ -50,7 +50,7 @@ export default function CardUser() {
           {role !== 'user' && (
             <DropdownMenuItem>
               <Home className='w-4 h-4 mr-2' />
-              <Link to={pathname.match('dashboard') ? '/' : role === 'admin' ? path.dashboard_admin : path.dashboard}>
+              <Link to={pathname.match('dashboard') ? '/' : role === 'admin' ? path.userManage : path.dashboard}>
                 {pathname.match('dashboard') ? 'Landing' : 'Dashboard'}
               </Link>
             </DropdownMenuItem>
