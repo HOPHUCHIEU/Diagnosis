@@ -80,10 +80,10 @@ const userRoutes = [
 ]
 
 const adminRoutes = [
-  {
-    path: path.dashboard_admin,
-    element: <DashboardAdmin />
-  },
+  // {
+  //   path: path.dashboard_admin,
+  //   element: <DashboardAdmin />
+  // },
   {
     path: path.userManage,
     element: <UserManage />
@@ -115,10 +115,10 @@ const adminRoutes = [
 ]
 
 const doctorRoutes = [
-  {
-    path: path.dashboard,
-    element: <DashboardDoctor />
-  },
+  // {
+  //   path: path.dashboard,
+  //   element: <DashboardDoctor />
+  // },
   {
     path: path.profileDoctor,
     element: <ProfileDoctor />
