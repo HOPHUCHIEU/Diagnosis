@@ -1,14 +1,15 @@
 import React from 'react'
 import { Calendar, Video, Stethoscope, ArrowRight } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 interface StepProps {
   number: number
-  title: string
-  description: string
+  stepKey: string
   icon: React.ElementType
 }
 
-const Step = ({ number, title, description, icon: Icon }: StepProps) => {
+const Step = ({ number, stepKey, icon: Icon }: StepProps) => {
+  const { t } = useTranslation('landing')
   return (
     <div className='flex flex-col items-center p-6 text-center'>
       <div className='relative'>
@@ -19,36 +20,33 @@ const Step = ({ number, title, description, icon: Icon }: StepProps) => {
           {number}
         </div>
       </div>
-      <h3 className='mb-2 text-xl font-semibold'>{title}</h3>
-      <p className='text-gray-600'>{description}</p>
+      <h3 className='mb-2 text-xl font-semibold'>{t(`howItWorks.steps.step${number}.title`)}</h3>
+      <p className='text-gray-600'>{t(`howItWorks.steps.step${number}.description`)}</p>
     </div>
   )
 }
 
 const HowItWorks = () => {
-  const steps: StepProps[] = [
+  const { t } = useTranslation('landing')
+  const steps = [
     {
       number: 1,
-      title: 'Đặt lịch khám',
-      description: 'Chọn bác sĩ chuyên khoa phù hợp và đặt lịch khám dễ dàng trực tuyến.',
+      stepKey: 'step1',
       icon: Calendar
     },
     {
       number: 2,
-      title: 'Tư vấn trực tuyến',
-      description: 'Kết nối với bác sĩ qua video call an toàn và riêng tư, không cần ra khỏi nhà.',
+      stepKey: 'step2',
       icon: Video
     },
     {
       number: 3,
-      title: 'Nhận chẩn đoán',
-      description: 'Bác sĩ sẽ tư vấn, chẩn đoán và cung cấp phương pháp điều trị phù hợp.',
+      stepKey: 'step3',
       icon: Stethoscope
     },
     {
       number: 4,
-      title: 'Tái khám',
-      description: 'Đặt lịch tái khám để bác sĩ theo dõi tình trạng sức khỏe theo đề xuất.',
+      stepKey: 'step4',
       icon: ArrowRight
     }
   ]
@@ -57,15 +55,13 @@ const HowItWorks = () => {
     <section className='py-16 bg-white'>
       <div className='container px-4 mx-auto'>
         <div className='mx-auto mb-12 max-w-2xl text-center'>
-          <h2 className='mb-4 text-3xl font-bold md:text-4xl'>Cách Thức Hoạt Động</h2>
-          <p className='text-lg text-gray-600'>
-            Quy trình đơn giản để kết nối với bác sĩ và nhận tư vấn y tế chất lượng cao
-          </p>
+          <h2 className='mb-4 text-3xl font-bold md:text-4xl'>{t('howItWorks.title')}</h2>
+          <p className='text-lg text-gray-600'>{t('howItWorks.subtitle')}</p>
         </div>
 
         <div className='grid gap-8 md:grid-cols-2 lg:grid-cols-4'>
-          {steps.map((step, index) => (
-            <Step key={index} number={step.number} title={step.title} description={step.description} icon={step.icon} />
+          {steps.map((step) => (
+            <Step key={step.number} {...step} />
           ))}
         </div>
 

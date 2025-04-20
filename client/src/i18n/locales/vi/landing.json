@@ -130,5 +130,65 @@
       "description": "Bạn có thắc mắc về dịch vụ của chúng tôi? Chúng tôi luôn sẵn sàng hỗ trợ.",
       "getInTouch": "Liên hệ ngay"
     }
+  },
+  "howItWorks": {
+    "title": "Cách Thức Hoạt Động",
+    "subtitle": "Quy trình đơn giản để kết nối với bác sĩ và nhận tư vấn y tế chất lượng cao",
+    "steps": {
+      "step1": {
+        "title": "Đặt lịch khám",
+        "description": "Chọn bác sĩ chuyên khoa phù hợp và đặt lịch khám dễ dàng trực tuyến."
+      },
+      "step2": {
+        "title": "Tư vấn trực tuyến",
+        "description": "Kết nối với bác sĩ qua video call an toàn và riêng tư, không cần ra khỏi nhà."
+      },
+      "step3": {
+        "title": "Nhận chẩn đoán",
+        "description": "Bác sĩ sẽ tư vấn, chẩn đoán và cung cấp phương pháp điều trị phù hợp."
+      },
+      "step4": {
+        "title": "Tái khám",
+        "description": "Đặt lịch tái khám để bác sĩ theo dõi tình trạng sức khỏe theo đề xuất."
+      }
+    }
+  },
+  "services": {
+    "title": "Dịch Vụ Y Tế",
+    "subtitle": "Chúng tôi cung cấp nhiều dịch vụ y tế chuyên nghiệp với đội ngũ bác sĩ giàu kinh nghiệm",
+    "items": {
+      "cardiology": {
+        "title": "Tim Mạch",
+        "description": "Chuyên gia tim mạch hàng đầu giúp chẩn đoán và điều trị các bệnh lý tim mạch."
+      },
+      "general": {
+        "title": "Nội Tổng Hợp",
+        "description": "Giải quyết các vấn đề sức khỏe tổng quát với đội ngũ bác sĩ giàu kinh nghiệm."
+      },
+      "neurology": {
+        "title": "Thần Kinh",
+        "description": "Chăm sóc và điều trị các bệnh lý thần kinh với phương pháp tiên tiến."
+      },
+      "ophthalmology": {
+        "title": "Nhãn Khoa",
+        "description": "Chăm sóc sức khỏe đôi mắt và điều trị các bệnh về mắt hiệu quả."
+      },
+      "immunology": {
+        "title": "Miễn Dịch & Dị Ứng",
+        "description": "Điều trị các bệnh dị ứng và rối loạn miễn dịch với phương pháp hiện đại."
+      },
+      "pediatrics": {
+        "title": "Nhi Khoa",
+        "description": "Chăm sóc sức khỏe toàn diện cho trẻ em từ sơ sinh đến tuổi vị thành niên."
+      }
+    }
+  },
+  "listDoctor": {
+    "title": "Đặt lịch khám trực tuyến",
+    "subtitle": "Đặt lịch khám với các bác sĩ chuyên khoa hàng đầu, tiết kiệm thời gian chờ đợi",
+    "search": "Tìm kiếm theo tên bác sĩ hoặc chuyên khoa...",
+    "noResults": "Không tìm thấy bác sĩ phù hợp với tìm kiếm của bạn",
+    "experience": "năm kinh nghiệm",
+    "bookAppointment": "Đặt lịch khám"
   }
 }
