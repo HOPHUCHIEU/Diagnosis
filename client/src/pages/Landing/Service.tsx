@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import path from '@/constants/path'
 
-export default function About() {
+export default function Service() {
   const { t } = useTranslation('landing')
 
   return (

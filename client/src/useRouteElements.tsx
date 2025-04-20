@@ -6,7 +6,7 @@ import DefaultLayout from './layouts/DefaultLayout'
 import DashboardLayout from './layouts/DashboardLayout'
 import { SignIn, SignUp, VerifyEmail, ForgotPassword } from './pages/NotAuth'
 import { Page_404 } from './pages/NotFound'
-import { About, DoctorProfile, Landing } from './pages/Landing'
+import { About, DoctorProfile, Landing, Service } from './pages/Landing'
 import { Profile } from './pages/Dashboard/user'
 import {
   AppointmentDoctor,
@@ -65,6 +65,10 @@ const publicRoutes = [
   {
     path: path.about,
     element: <About />
+  },
+  {
+    path: path.services,
+    element: <Service />
   },
   {
     path: path.profileDoctorPublic,

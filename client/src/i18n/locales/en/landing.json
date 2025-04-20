@@ -110,22 +110,85 @@
   },
   "howItWorks": {
     "title": "How It Works",
-    "subtitle": "A simple process to connect with doctors and receive quality healthcare.",
-    "step1": {
-      "title": "Book an Appointment",
-      "description": "Choose a specialist and book an appointment easily online."
-    },
-    "step2": {
-      "title": "Online Consultation",
-      "description": "Connect with doctors via secure and private video calls from home."
-    },
-    "step3": {
-      "title": "Get Diagnosis",
-      "description": "Doctors will provide consultation, diagnosis, and suitable treatment."
-    },
-    "step4": {
-      "title": "Follow-up",
-      "description": "Schedule follow-up appointments to monitor your health condition."
+    "subtitle": "Simple process to connect with doctors and receive high-quality medical consultation",
+    "steps": {
+      "step1": {
+        "title": "Book Appointment",
+        "description": "Choose a suitable specialist and easily book an online appointment."
+      },
+      "step2": {
+        "title": "Online Consultation",
+        "description": "Connect with doctors via secure and private video call, without leaving home."
+      },
+      "step3": {
+        "title": "Get Diagnosis",
+        "description": "Doctors will consult, diagnose and provide appropriate treatment methods."
+      },
+      "step4": {
+        "title": "Follow Up",
+        "description": "Schedule follow-up appointments for doctors to monitor health conditions as recommended."
+      }
     }
+  },
+  "about": {
+    "title": "About DiagnosisIQ",
+    "description": "DiagnosisIQ - Your Trusted Healthcare Partner",
+    "subtitle": "Empowering healthcare through advanced technology and expert medical consultation",
+    "mission": {
+      "title": "Our Mission",
+      "description": "DiagnosisIQ aims to bridge the gap between patients and healthcare professionals through innovative technology. We provide accessible, high-quality medical consultations and leverage AI to enhance diagnostic accuracy.",
+      "learnMore": "Learn more about our services"
+    },
+    "features": {
+      "experts": "Expert Medical Team",
+      "expertsDesc": "Connect with qualified doctors and specialists for professional medical consultations",
+      "ai": "AI-Powered Assistance",
+      "aiDesc": "Advanced AI technology to help analyze symptoms and support diagnostic processes",
+      "telemedicine": "Telemedicine Services",
+      "telemedicineDesc": "Remote consultations and follow-ups from the comfort of your home"
+    },
+    "contact": {
+      "title": "Get in Touch",
+      "description": "Have questions about our services? We're here to help you.",
+      "getInTouch": "Contact Us"
+    }
+  },
+  "services": {
+    "title": "Medical Services",
+    "subtitle": "We provide many professional medical services with experienced doctors",
+    "items": {
+      "cardiology": {
+        "title": "Cardiology",
+        "description": "Leading cardiologists help diagnose and treat cardiovascular diseases."
+      },
+      "general": {
+        "title": "General Medicine",
+        "description": "Address general health issues with our experienced team of doctors."
+      },
+      "neurology": {
+        "title": "Neurology",
+        "description": "Care and treatment of neurological diseases with advanced methods."
+      },
+      "ophthalmology": {
+        "title": "Ophthalmology",
+        "description": "Eye health care and effective treatment of eye diseases."
+      },
+      "immunology": {
+        "title": "Immunology & Allergy",
+        "description": "Treatment of allergies and immune disorders with modern methods."
+      },
+      "pediatrics": {
+        "title": "Pediatrics",
+        "description": "Comprehensive health care for children from newborn to adolescence."
+      }
+    }
+  },
+  "listDoctor": {
+    "title": "Book Online Appointments", 
+    "subtitle": "Schedule appointments with leading specialists, save waiting time",
+    "search": "Search by doctor name or specialty...",
+    "noResults": "No doctors found matching your search",
+    "experience": "years of experience",
+    "bookAppointment": "Book Appointment"
   }
 }
