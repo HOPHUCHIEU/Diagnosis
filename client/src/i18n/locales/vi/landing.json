@@ -107,5 +107,28 @@
       "resendSuccess": "Đã gửi lại mã xác thực",
       "resendError": "Không thể gửi lại mã. Vui lòng thử lại sau"
     }
+  },
+  "about": {
+    "title": "Về DiagnosisIQ",
+    "description": "DiagnosisIQ - Đối tác Y tế Tin cậy của bạn",
+    "subtitle": "Nâng cao chất lượng chăm sóc sức khỏe thông qua công nghệ tiên tiến và tư vấn y tế chuyên nghiệp",
+    "mission": {
+      "title": "Sứ mệnh của chúng tôi",
+      "description": "DiagnosisIQ hướng đến việc kết nối bệnh nhân và các chuyên gia y tế thông qua công nghệ đổi mới. Chúng tôi cung cấp dịch vụ tư vấn y tế chất lượng cao, dễ tiếp cận và ứng dụng trí tuệ nhân tạo để nâng cao độ chính xác trong chẩn đoán.",
+      "learnMore": "Tìm hiểu thêm về dịch vụ của chúng tôi"
+    },
+    "features": {
+      "experts": "Đội ngũ Y tế Chuyên nghiệp",
+      "expertsDesc": "Kết nối với các bác sĩ và chuyên gia có trình độ để được tư vấn y tế chuyên nghiệp",
+      "ai": "Hỗ trợ bởi Trí tuệ Nhân tạo",
+      "aiDesc": "Công nghệ AI tiên tiến giúp phân tích triệu chứng và hỗ trợ quá trình chẩn đoán",
+      "telemedicine": "Dịch vụ Khám bệnh Từ xa",
+      "telemedicineDesc": "Tư vấn và theo dõi từ xa trong không gian thoải mái tại nhà"
+    },
+    "contact": {
+      "title": "Liên hệ",
+      "description": "Bạn có thắc mắc về dịch vụ của chúng tôi? Chúng tôi luôn sẵn sàng hỗ trợ.",
+      "getInTouch": "Liên hệ ngay"
+    }
   }
 }

@@ -107,5 +107,28 @@
       "resendSuccess": "Verification code has been sent",
       "resendError": "Couldn't resend code. Please try again later"
     }
+  },
+  "about": {
+    "title": "About DiagnosisIQ",
+    "description": "DiagnosisIQ - Your Trusted Healthcare Partner",
+    "subtitle": "Empowering healthcare through advanced technology and expert medical consultation",
+    "mission": {
+      "title": "Our Mission",
+      "description": "DiagnosisIQ aims to bridge the gap between patients and healthcare professionals through innovative technology. We provide accessible, high-quality medical consultations and leverage AI to enhance diagnostic accuracy.",
+      "learnMore": "Learn more about our services"
+    },
+    "features": {
+      "experts": "Expert Medical Team",
+      "expertsDesc": "Connect with qualified doctors and specialists for professional medical consultations",
+      "ai": "AI-Powered Assistance",
+      "aiDesc": "Advanced AI technology to help analyze symptoms and support diagnostic processes",
+      "telemedicine": "Telemedicine Services",
+      "telemedicineDesc": "Remote consultations and follow-ups from the comfort of your home"
+    },
+    "contact": {
+      "title": "Get in Touch",
+      "description": "Have questions about our services? We're here to help you.",
+      "getInTouch": "Contact Us"
+    }
   }
 }
