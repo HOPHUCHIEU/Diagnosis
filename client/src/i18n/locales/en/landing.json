@@ -107,5 +107,25 @@
       "resendSuccess": "Verification code has been sent",
       "resendError": "Couldn't resend code. Please try again later"
     }
+  },
+  "howItWorks": {
+    "title": "How It Works",
+    "subtitle": "A simple process to connect with doctors and receive quality healthcare.",
+    "step1": {
+      "title": "Book an Appointment",
+      "description": "Choose a specialist and book an appointment easily online."
+    },
+    "step2": {
+      "title": "Online Consultation",
+      "description": "Connect with doctors via secure and private video calls from home."
+    },
+    "step3": {
+      "title": "Get Diagnosis",
+      "description": "Doctors will provide consultation, diagnosis, and suitable treatment."
+    },
+    "step4": {
+      "title": "Follow-up",
+      "description": "Schedule follow-up appointments to monitor your health condition."
+    }
   }
 }

@@ -107,5 +107,25 @@
       "resendSuccess": "Đã gửi lại mã xác thực",
       "resendError": "Không thể gửi lại mã. Vui lòng thử lại sau"
     }
+  },
+  "howItWorks": {
+    "title": "Cách Thức Hoạt Động",
+    "subtitle": "Quy trình đơn giản để kết nối với bác sĩ và nhận tư vấn y tế chất lượng cao.",
+    "step1": {
+      "title": "Đặt lịch khám",
+      "description": "Chọn bác sĩ chuyên khoa phù hợp và đặt lịch khám dễ dàng trực tuyến."
+    },
+    "step2": {
+      "title": "Tư vấn trực tuyến",
+      "description": "Kết nối với bác sĩ qua video call an toàn và riêng tư, không cần ra khỏi nhà."
+    },
+    "step3": {
+      "title": "Nhận chẩn đoán",
+      "description": "Bác sĩ sẽ tư vấn, chẩn đoán và cung cấp phương pháp điều trị phù hợp."
+    },
+    "step4": {
+      "title": "Tái khám",
+      "description": "Đặt lịch tái khám để bác sĩ theo dõi tình trạng sức khỏe theo đề xuất."
+    }
   }
 }

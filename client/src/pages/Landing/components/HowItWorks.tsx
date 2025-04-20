@@ -1,6 +1,6 @@
 import React from 'react'
 import { Calendar, Video, Stethoscope, ArrowRight } from 'lucide-react'
-
+import { useTranslation } from 'react-i18next' // Import useTranslation
 interface StepProps {
   number: number
   title: string
@@ -26,29 +26,31 @@ const Step = ({ number, title, description, icon: Icon }: StepProps) => {
 }
 
 const HowItWorks = () => {
+  const { t } = useTranslation() // Hook để sử dụng i18n
+
   const steps: StepProps[] = [
     {
       number: 1,
-      title: 'Đặt lịch khám',
-      description: 'Chọn bác sĩ chuyên khoa phù hợp và đặt lịch khám dễ dàng trực tuyến.',
+      title: t('howItWorks.step1.title'), // Sử dụng key dịch
+      description: t('howItWorks.step1.description'),
       icon: Calendar
     },
     {
       number: 2,
-      title: 'Tư vấn trực tuyến',
-      description: 'Kết nối với bác sĩ qua video call an toàn và riêng tư, không cần ra khỏi nhà.',
+      title: t('howItWorks.step2.title'),
+      description: t('howItWorks.step2.description'),
       icon: Video
     },
     {
       number: 3,
-      title: 'Nhận chẩn đoán',
-      description: 'Bác sĩ sẽ tư vấn, chẩn đoán và cung cấp phương pháp điều trị phù hợp.',
+      title: t('howItWorks.step3.title'),
+      description: t('howItWorks.step3.description'),
       icon: Stethoscope
     },
     {
       number: 4,
-      title: 'Tái khám',
-      description: 'Đặt lịch tái khám để bác sĩ theo dõi tình trạng sức khỏe theo đề xuất.',
+      title: t('howItWorks.step4.title'),
+      description: t('howItWorks.step4.description'),
       icon: ArrowRight
     }
   ]
