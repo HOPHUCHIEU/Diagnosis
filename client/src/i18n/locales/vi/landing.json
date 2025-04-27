@@ -107,5 +107,91 @@
       "resendSuccess": "Đã gửi lại mã xác thực",
       "resendError": "Không thể gửi lại mã. Vui lòng thử lại sau"
     }
+<<<<<<< HEAD
+=======
+  },
+  "howItWorks": {
+    "title": "Cách Thức Hoạt Động",
+    "subtitle": "Quy trình đơn giản để kết nối với bác sĩ và nhận tư vấn y tế chất lượng cao",
+    "steps": {
+      "step1": {
+        "title": "Đặt Lịch Hẹn",
+        "description": "Chọn bác sĩ chuyên khoa phù hợp và dễ dàng đặt lịch hẹn trực tuyến."
+      },
+      "step2": {
+        "title": "Tư Vấn Trực Tuyến",
+        "description": "Kết nối với bác sĩ thông qua cuộc gọi video an toàn và riêng tư, không cần rời khỏi nhà."
+      },
+      "step3": {
+        "title": "Nhận Chẩn Đoán",
+        "description": "Bác sĩ sẽ tư vấn, chẩn đoán và đưa ra phương pháp điều trị phù hợp."
+      },
+      "step4": {
+        "title": "Theo Dõi",
+        "description": "Đặt lịch tái khám để bác sĩ theo dõi tình trạng sức khỏe theo khuyến nghị."
+      }
+    }
+  },
+  "about": {
+    "title": "Về DiagnosisIQ",
+    "description": "DiagnosisIQ - Đối Tác Y Tế Đáng Tin Cậy",
+    "subtitle": "Nâng cao chất lượng chăm sóc sức khỏe thông qua công nghệ tiên tiến và tư vấn y tế chuyên nghiệp",
+    "mission": {
+      "title": "Sứ Mệnh",
+      "description": "DiagnosisIQ hướng đến việc kết nối bệnh nhân và chuyên gia y tế thông qua công nghệ đổi mới. Chúng tôi cung cấp dịch vụ tư vấn y tế chất lượng cao, dễ tiếp cận và tận dụng AI để nâng cao độ chính xác trong chẩn đoán.",
+      "learnMore": "Tìm hiểu thêm về dịch vụ"
+    },
+    "features": {
+      "experts": "Đội Ngũ Y Tế Chuyên Nghiệp",
+      "expertsDesc": "Kết nối với các bác sĩ và chuyên gia có trình độ để được tư vấn y tế chuyên nghiệp",
+      "ai": "Hỗ Trợ Bởi AI",
+      "aiDesc": "Công nghệ AI tiên tiến giúp phân tích triệu chứng và hỗ trợ quá trình chẩn đoán",
+      "telemedicine": "Dịch Vụ Telemedicine",
+      "telemedicineDesc": "Tư vấn và theo dõi từ xa ngay tại nhà"
+    },
+    "contact": {
+      "title": "Liên Hệ",
+      "description": "Có thắc mắc về dịch vụ của chúng tôi? Chúng tôi sẵn sàng hỗ trợ bạn.",
+      "getInTouch": "Liên Hệ Ngay"
+    }
+  },
+  "services": {
+    "title": "Dịch Vụ Y Tế",
+    "subtitle": "Chúng tôi cung cấp nhiều dịch vụ y tế chuyên nghiệp với đội ngũ bác sĩ giàu kinh nghiệm",
+    "items": {
+      "cardiology": {
+        "title": "Tim Mạch",
+        "description": "Các bác sĩ tim mạch hàng đầu giúp chẩn đoán và điều trị bệnh tim mạch."
+      },
+      "general": {
+        "title": "Đa Khoa",
+        "description": "Giải quyết các vấn đề sức khỏe chung với đội ngũ bác sĩ giàu kinh nghiệm."
+      },
+      "neurology": {
+        "title": "Thần Kinh",
+        "description": "Chăm sóc và điều trị các bệnh thần kinh bằng phương pháp tiên tiến."
+      },
+      "ophthalmology": {
+        "title": "Mắt",
+        "description": "Chăm sóc sức khỏe mắt và điều trị hiệu quả các bệnh về mắt."
+      },
+      "immunology": {
+        "title": "Miễn Dịch & Dị Ứng",
+        "description": "Điều trị dị ứng và rối loạn miễn dịch bằng phương pháp hiện đại."
+      },
+      "pediatrics": {
+        "title": "Nhi Khoa",
+        "description": "Chăm sóc sức khỏe toàn diện cho trẻ em từ sơ sinh đến tuổi vị thành niên."
+      }
+    }
+  },
+  "listDoctor": {
+    "title": "Đặt Lịch Hẹn Trực Tuyến",
+    "subtitle": "Đặt lịch với các bác sĩ chuyên khoa hàng đầu, tiết kiệm thời gian chờ đợi",
+    "search": "Tìm theo tên bác sĩ hoặc chuyên khoa...",
+    "noResults": "Không tìm thấy bác sĩ phù hợp với tìm kiếm của bạn",
+    "experience": "năm kinh nghiệm",
+    "bookAppointment": "Đặt Lịch Hẹn"
+>>>>>>> 83ce7fb136b27a5e9574eea92476249fa1b1248f
   }
 }

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react'
 import { Calendar, Video, Stethoscope, ArrowRight } from 'lucide-react'
 
@@ -9,21 +10,74 @@ interface StepProps {
 }
 
 const Step = ({ number, title, description, icon: Icon }: StepProps) => {
+=======
+import React from "react";
+import { useTranslation } from "react-i18next";
+import { Card, CardContent } from "@/components/ui/card";
+
+const steps = [
+  {
+    stepKey: "step1",
+    image: "/landing/appointment.svg",
+  },
+  {
+    stepKey: "step2",
+    image: "/landing/tele.svg",
+  },
+  {
+    stepKey: "step3",
+    image: "/landing/dashboard.svg",
+  },
+  {
+    stepKey: "step4",
+    image: "/landing/quick_consultant.svg",
+  },
+] as const;
+
+export default function HowItWorks() {
+  const { t } = useTranslation();
+
+  const getTranslation = (key: string) => {
+    return t(key as any);
+  };
+
+>>>>>>> 83ce7fb136b27a5e9574eea92476249fa1b1248f
   return (
-    <div className='flex flex-col items-center p-6 text-center'>
-      <div className='relative'>
-        <div className='flex justify-center items-center mb-4 w-16 h-16 rounded-full bg-primary/10'>
-          <Icon className='w-8 h-8 text-primary' />
-        </div>
-        <div className='flex absolute -top-2 -right-2 justify-center items-center w-8 h-8 text-white rounded-full bg-primary'>
-          {number}
-        </div>
+    <div className="container mx-auto px-4 py-16">
+      <div className="text-center mb-12">
+        <h2 className="text-3xl font-bold mb-4">{getTranslation("howItWorks.title")}</h2>
+        <p className="text-gray-600">{getTranslation("howItWorks.subtitle")}</p>
       </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {steps.map((step) => (
+          <Card key={step.stepKey} className="hover:shadow-lg transition-shadow">
+            <CardContent className="p-6">
+              <div className="flex flex-col items-center">
+                <img
+                  src={step.image}
+                  alt={getTranslation(`howItWorks.steps.${step.stepKey}.title`)}
+                  className="w-24 h-24 mb-4"
+                />
+                <h3 className="text-xl font-semibold mb-2">
+                  {getTranslation(`howItWorks.steps.${step.stepKey}.title`)}
+                </h3>
+                <p className="text-gray-600 text-center">
+                  {getTranslation(`howItWorks.steps.${step.stepKey}.description`)}
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+<<<<<<< HEAD
       <h3 className='mb-2 text-xl font-semibold'>{title}</h3>
       <p className='text-gray-600'>{description}</p>
+=======
+>>>>>>> 83ce7fb136b27a5e9574eea92476249fa1b1248f
     </div>
-  )
+  );
 }
+<<<<<<< HEAD
 
 const HowItWorks = () => {
   const steps: StepProps[] = [
@@ -84,3 +138,5 @@ const HowItWorks = () => {
 }
 
 export default HowItWorks
+=======
+>>>>>>> 83ce7fb136b27a5e9574eea92476249fa1b1248f
