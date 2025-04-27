@@ -107,8 +107,7 @@
       "resendSuccess": "Verification code has been sent",
       "resendError": "Couldn't resend code. Please try again later"
     }
-<<<<<<< HEAD
-=======
+
   },
   "howItWorks": {
     "title": "How It Works",
@@ -192,6 +191,5 @@
     "noResults": "No doctors found matching your search",
     "experience": "years of experience",
     "bookAppointment": "Book Appointment"
->>>>>>> 83ce7fb136b27a5e9574eea92476249fa1b1248f
   }
 }

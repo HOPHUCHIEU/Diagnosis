@@ -107,8 +107,7 @@
       "resendSuccess": "Đã gửi lại mã xác thực",
       "resendError": "Không thể gửi lại mã. Vui lòng thử lại sau"
     }
-<<<<<<< HEAD
-=======
+
   },
   "howItWorks": {
     "title": "Cách Thức Hoạt Động",
@@ -192,6 +191,5 @@
     "noResults": "Không tìm thấy bác sĩ phù hợp với tìm kiếm của bạn",
     "experience": "năm kinh nghiệm",
     "bookAppointment": "Đặt Lịch Hẹn"
->>>>>>> 83ce7fb136b27a5e9574eea92476249fa1b1248f
   }
 }
