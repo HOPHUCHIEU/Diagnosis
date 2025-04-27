@@ -4,21 +4,19 @@ import { AuthService } from './auth.service'
 import { UserModule } from 'apps/api-service/src/account/user/user.module'
 import { PassportModule } from '@nestjs/passport'
 import { JwtModule } from '@nestjs/jwt'
-import { ConfigModule, ConfigService } from '@nestjs/config'
+import { ConfigService } from '@nestjs/config'
 import { LocalStrategy } from 'apps/api-service/src/auth/passport/local.strategy'
 import { JwtStrategy } from 'apps/api-service/src/auth/passport/jwt.strategy'
 import { RolesGuard } from 'apps/api-service/src/auth/passport/role.guard'
 
 @Module({
   imports: [
-    ConfigModule, // Đảm bảo ConfigModule được import
     UserModule,
     PassportModule,
+    // MailModule,
     JwtModule.registerAsync({
-      imports: [ConfigModule], // Import ConfigModule để sử dụng ConfigService
       useFactory: async (config: ConfigService) => ({
-        secret: config.get<string>('JWT_SECRET_KEY') || 'defaultSecret', // Đảm bảo giá trị fallback
-        signOptions: { expiresIn: '1h' }
+        secret: config.get('JWT_SECRET_KEY')
       }),
       inject: [ConfigService]
     })

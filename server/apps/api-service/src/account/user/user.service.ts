@@ -107,7 +107,15 @@ export class UserService {
   async findAll(user: User) {
     const users = await this.userModel
       .find({ _id: { $ne: user._id } })
-      .populate('profile', '-__v')
+      // .populate('profile', '-__v')
+      .populate([
+        {
+          path: 'profile',
+          populate: {
+            path: 'address'
+          }
+        }
+      ])
       .select('-password -confirmationCode -confirmationCodeExpired -__v')
       .lean()
       .exec()
@@ -139,6 +147,46 @@ export class UserService {
     return user
   }
 
+  private async handleAddressUpdate({
+    existingUser,
+    street,
+    ward,
+    district,
+    province
+  }: {
+    existingUser: User
+    street?: string
+    ward?: string
+    district?: string
+    province?: string
+  }): Promise<Types.ObjectId | null> {
+    let addressId = null
+
+    if (existingUser.profile) {
+      const existingUserId = existingUser.profile._id.toString()
+      const existingProfile = await this.userProfileModel.findById(existingUserId).populate('address').exec()
+
+      if (existingProfile?.address) {
+        await this.addressModel.findByIdAndUpdate(
+          existingProfile.address._id.toString(),
+          { $set: { street, ward, district, province } },
+          { new: true }
+        )
+        addressId = existingProfile.address
+      } else {
+        const newAddress = new this.addressModel({ street, ward, district, province })
+        const savedAddress = await newAddress.save()
+        addressId = savedAddress._id
+      }
+    } else {
+      const newAddress = new this.addressModel({ street, ward, district, province })
+      const savedAddress = await newAddress.save()
+      addressId = savedAddress._id
+    }
+
+    return addressId
+  }
+
   async create(createUserDto: AdminCreateUserDto) {
     const {
       email,
@@ -157,16 +205,14 @@ export class UserService {
 
     if (isEmailExist) throw new ConflictException('EMAIL_ALREADY_EXISTS')
 
-    let addressId = null
-    if (street || ward || district || province) {
-      const newAddress = await new this.addressModel({
-        street,
-        ward,
-        district,
-        province
-      }).save()
-      addressId = newAddress._id
-    }
+    const tempUser = new this.userModel()
+    const addressId = await this.handleAddressUpdate({
+      existingUser: tempUser,
+      street,
+      ward,
+      district,
+      province
+    })
 
     const userProfile = new this.userProfileModel({
       firstName,
@@ -206,7 +252,7 @@ export class UserService {
       province,
       isVerified
     } = updateUserDto
-    const existingUser = await this.userModel.findById(id).exec()
+    const existingUser = await this.userModel.findById(id).populate('profile').exec()
     if (!existingUser) {
       throw new NotFoundException('USER_NOT_FOUND')
     }
@@ -215,39 +261,15 @@ export class UserService {
       throw new ConflictException('CANNOT_CHANGE_ADMIN_ROLE')
     }
 
-    let addressId = null
-    if (street || ward || district || province) {
-      if (existingUser.profile) {
-        const existingProfile = await this.userProfileModel.findById(existingUser.profile)
-        if (existingProfile.address) {
-          await this.addressModel.findByIdAndUpdate(existingProfile.address, {
-            street,
-            ward,
-            district,
-            province
-          })
-          addressId = existingProfile.address
-        } else {
-          const newAddress = await new this.addressModel({
-            street,
-            ward,
-            district,
-            province
-          }).save()
-          addressId = newAddress._id
-        }
-      } else {
-        const newAddress = await new this.addressModel({
-          street,
-          ward,
-          district,
-          province
-        }).save()
-        addressId = newAddress._id
-      }
-    }
+    const addressId = await this.handleAddressUpdate({
+      existingUser,
+      street,
+      ward,
+      district,
+      province
+    })
 
-    if (firstName || lastName || phone || gender || birth || avatar) {
+    if (firstName || lastName || phone || gender || birth || avatar || street || ward || district || province) {
       if (!existingUser.profile) {
         const newProfile = await new this.userProfileModel({
           firstName,
@@ -353,6 +375,16 @@ export class UserService {
     if (!user) {
       throw new NotFoundException('USER_NOT_FOUND')
     }
+    if (user.role === Role.Doctor) {
+      const doctorProfile = await this.doctorProfileModel.findOne({ doctor: id }).exec()
+      if (doctorProfile) {
+        await this.doctorProfileModel.findByIdAndDelete(doctorProfile._id).exec()
+      }
+    }
+    const patientRecord = await this.patientRecordModel.findOne({ patient: id }).exec()
+    if (patientRecord) {
+      await this.patientRecordModel.findByIdAndDelete(patientRecord._id).exec()
+    }
     if (user.profile) {
       const profile = await this.userProfileModel.findById(user.profile).exec()
       if (profile.address) {
@@ -367,37 +399,13 @@ export class UserService {
   async updateProfile(user: User, updateProfileDto: UpdateProfileDto) {
     const { firstName, lastName, phone, gender, birth, avatar, address, street, ward, district, province } =
       updateProfileDto
-    let addressId = null
-    if (street || ward || district || province) {
-      if (user.profile) {
-        const existingProfile = await this.userProfileModel.findById(user.profile)
-        if (existingProfile.address) {
-          await this.addressModel.findByIdAndUpdate(existingProfile.address, {
-            street,
-            ward,
-            district,
-            province
-          })
-          addressId = existingProfile.address
-        } else {
-          const newAddress = await new this.addressModel({
-            street,
-            ward,
-            district,
-            province
-          }).save()
-          addressId = newAddress._id
-        }
-      } else {
-        const newAddress = await new this.addressModel({
-          street,
-          ward,
-          district,
-          province
-        }).save()
-        addressId = newAddress._id
-      }
-    }
+    const addressId = await this.handleAddressUpdate({
+      existingUser: user,
+      street,
+      ward,
+      district,
+      province
+    })
 
     if (!user.profile) {
       const newProfile = await new this.userProfileModel({

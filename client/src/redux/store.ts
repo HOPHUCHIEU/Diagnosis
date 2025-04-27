@@ -13,7 +13,7 @@ import { appointmentApi } from './services/appointmentApi'
 import { packageApi } from './services/packageApi'
 import { paymentApi } from './services/paymentApi'
 import { reviewApi } from './services/reviewApi'
-// import { chatbotApi } from './services/chatbotApi'
+import { chatbotApi } from './services/chatbotApi'
 
 export const store = configureStore({
   reducer: {
@@ -27,7 +27,7 @@ export const store = configureStore({
     [packageApi.reducerPath]: packageApi.reducer,
     [paymentApi.reducerPath]: paymentApi.reducer,
     [reviewApi.reducerPath]: reviewApi.reducer,
-    // [chatbotApi.reducerPath]: chatbotApi.reducer,
+    [chatbotApi.reducerPath]: chatbotApi.reducer,
     errorToast: errorToastSlice,
     authState: authReducer
   },
@@ -42,8 +42,8 @@ export const store = configureStore({
       appointmentApi.middleware,
       packageApi.middleware,
       paymentApi.middleware,
-      reviewApi.middleware
-      // chatbotApi.middleware
+      reviewApi.middleware,
+      chatbotApi.middleware
     )
 })
 setupListeners(store.dispatch)

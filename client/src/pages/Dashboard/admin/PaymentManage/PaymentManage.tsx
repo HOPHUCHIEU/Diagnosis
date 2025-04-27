@@ -32,29 +32,29 @@ export default function PaymentManage() {
   const payments = data?.data || []
 
   // Chuyển đổi payment từ API thành định dạng bảng
-  // const tableData = payments.map((payment) => {
-  //   // Tạo các trường phái sinh từ dữ liệu gốc
-  //   const userId = payment.user?._id ? bufferToHex(payment.user._id) : 'N/A'
-  //   const userName = payment.user?.profile
-  //     ? `${payment.user.profile.firstName} ${payment.user.profile.lastName}`
-  //     : 'N/A'
+  const tableData = payments.map((payment) => {
+    // Tạo các trường phái sinh từ dữ liệu gốc
+    const userId = payment.user?._id ? bufferToHex(payment.user._id) : 'N/A'
+    const userName = payment.user?.profile
+      ? `${payment.user.profile.firstName} ${payment.user.profile.lastName}`
+      : 'N/A'
 
-  //   const packageId = payment.package?._id ? bufferToHex(payment.package._id) : 'N/A'
-  //   const packageName = payment.package?.name || 'N/A'
+    const packageId = payment.package?._id ? bufferToHex(payment.package._id) : 'N/A'
+    const packageName = payment.package?.name || 'N/A'
 
-  //   return {
-  //     id: bufferToHex(payment._id),
-  //     packageId,
-  //     packageName,
-  //     userId,
-  //     userName,
-  //     date: payment.createdAt,
-  //     amount: payment.total_price,
-  //     status: payment.status,
-  //     method: payment.bank_code,
-  //     paymentDate: payment.payment_date
-  //   }
-  // })
+    return {
+      id: bufferToHex(payment._id),
+      packageId,
+      packageName,
+      userId,
+      userName,
+      date: payment.createdAt,
+      amount: payment.total_price,
+      status: payment.status,
+      method: payment.bank_code,
+      paymentDate: payment.payment_date
+    }
+  })
 
   const handleViewPayment = (payment: any) => {
     setSelectedPaymentId(payment.id)
@@ -85,10 +85,10 @@ export default function PaymentManage() {
 
   return (
     <div className='p-6'>
-      <div className='flex justify-between items-center mb-4'>
+      <div className='flex items-center justify-between mb-4'>
         <h1 className='text-2xl font-bold'>Quản lý thanh toán</h1>
         <Button size='sm' variant='outline' onClick={() => refetch()} disabled={isFetching}>
-          <RefreshCcw className='mr-2 w-4 h-4' />
+          <RefreshCcw className='w-4 h-4 mr-2' />
           Làm mới
         </Button>
       </div>
@@ -99,15 +99,15 @@ export default function PaymentManage() {
         </CardHeader>
         <CardContent>
           <div className='grid grid-cols-3 gap-4'>
-            <div className='p-4 bg-blue-50 rounded-lg'>
+            <div className='p-4 rounded-lg bg-blue-50'>
               <h3 className='text-sm font-medium text-blue-700'>Tổng giao dịch</h3>
               <p className='text-2xl font-bold'>{payments.length}</p>
             </div>
-            <div className='p-4 bg-green-50 rounded-lg'>
+            <div className='p-4 rounded-lg bg-green-50'>
               <h3 className='text-sm font-medium text-green-700'>Đã thanh toán</h3>
               <p className='text-2xl font-bold'>{payments.filter((p) => p.status === 'paid').length}</p>
             </div>
-            <div className='p-4 bg-yellow-50 rounded-lg'>
+            <div className='p-4 rounded-lg bg-yellow-50'>
               <h3 className='text-sm font-medium text-yellow-700'>Chờ thanh toán</h3>
               <p className='text-2xl font-bold'>{payments.filter((p) => p.status === 'pending').length}</p>
             </div>
@@ -115,18 +115,18 @@ export default function PaymentManage() {
         </CardContent>
       </Card>
 
-      {/* <DataTable
+      <DataTable
         columns={paymentColumns(handleViewPayment)}
         data={tableData}
         isLoading={isFetching}
         onReload={() => refetch()}
         headerClassName='bg-gray-200 text-sm !font-semibold'
-      /> */}
+      />
 
       <Dialog open={!!selectedPaymentId} onOpenChange={(open) => !open && setSelectedPaymentId(null)}>
         <DialogContent className='max-w-3xl max-h-[calc(100vh-4rem)] min-h-[calc(100vh-4rem)] overflow-y-auto'>
           {isLoadingDetail ? (
-            <div className='flex flex-col justify-center items-center h-full'>
+            <div className='flex flex-col items-center justify-center h-full'>
               <Loader2 className='w-8 h-8 animate-spin text-primary' />
               <p className='mt-4 text-sm text-gray-500'>Đang tải thông tin thanh toán...</p>
             </div>

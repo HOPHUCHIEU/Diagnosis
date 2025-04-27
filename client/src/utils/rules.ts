@@ -69,7 +69,7 @@ export const adminUpdateUserSchema = yup.object({
   birth: yup.date().nullable(),
   gender: yup.string().oneOf(['male', 'female'], 'Vui lòng chọn giới tính'),
   role: yup.string().oneOf(['user', 'doctor'], 'Vui lòng chọn vai trò'),
-  address: yup.string(),
+  // address: yup.string(),
   disabled: yup.boolean(),
   isVerified: yup.boolean()
 })

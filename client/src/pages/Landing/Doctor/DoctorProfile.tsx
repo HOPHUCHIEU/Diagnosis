@@ -24,7 +24,19 @@ import { toast } from 'react-toastify'
 import { CustomNotification } from '@/components/CustomReactToastify'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import DoctorReviewList from '@/components/Review/DoctorReviewList'
-import { Star, Users, Award, Languages, GraduationCap, Calendar, MapPin, Clock, Stethoscope } from 'lucide-react'
+import {
+  Star,
+  Users,
+  Award,
+  Languages,
+  GraduationCap,
+  Calendar,
+  MapPin,
+  Clock,
+  Stethoscope,
+  RefreshCcw,
+  RefreshCw
+} from 'lucide-react'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 
@@ -226,7 +238,7 @@ export default function DoctorProfile() {
                 <div className='h-32 bg-gradient-to-br from-primary/90 to-primary/20' />
 
                 <div className='px-6 pb-6 space-y-6'>
-                  <div className='flex flex-col gap-6 items-center -mt-16 md:flex-row md:items-start'>
+                  <div className='flex flex-col items-center gap-6 -mt-16 md:flex-row md:items-start'>
                     <Avatar className='w-32 h-32 bg-white border-4 border-white shadow-md'>
                       <AvatarImage src={doctorProfile?.data.profileImage || doctorProfile?.data.profileImage} />
                       <AvatarFallback className='text-2xl'>
@@ -240,21 +252,21 @@ export default function DoctorProfile() {
                           'Tên đầy đủ Doctor'}
                       </h1>
 
-                      <div className='flex flex-wrap gap-2 justify-center mt-2 md:justify-start'>
+                      <div className='flex flex-wrap justify-center gap-2 mt-2 md:justify-start'>
                         {doctorProfile?.data.specialties.map((specialty) => (
                           <Button size='sm' key={specialty} className='py-1 text-xs h-fit' effect='shine'>
-                            <Stethoscope className='mr-1 w-3 h-3' />
+                            <Stethoscope className='w-3 h-3 mr-1' />
                             {specialty}
                           </Button>
                         ))}
                       </div>
 
-                      <div className='flex flex-wrap gap-2 justify-center mt-3 md:justify-start'>
+                      <div className='flex flex-wrap justify-center gap-2 mt-3 md:justify-start'>
                         <Badge variant='outline' className='px-3 py-1 text-green-600 bg-green-50'>
                           {doctorProfile?.data.isAvailable ? 'Đang làm việc' : 'Tạm nghỉ'}
                         </Badge>
                         <Badge variant='outline' className='px-3 py-1'>
-                          <Clock className='mr-1 w-3 h-3' />
+                          <Clock className='w-3 h-3 mr-1' />
                           {doctorProfile?.data.yearsOfExperience} năm kinh nghiệm
                         </Badge>
                         {/* <Badge variant='outline' className='px-3 py-1'>
@@ -262,7 +274,7 @@ export default function DoctorProfile() {
                         </Badge> */}
 
                         {hasReviews && (
-                          <Badge variant='outline' className='flex gap-1 items-center px-3 py-1'>
+                          <Badge variant='outline' className='flex items-center gap-1 px-3 py-1'>
                             <div className='flex'>
                               {Array.from({ length: 5 }).map((_, i) => (
                                 <Star
@@ -280,7 +292,7 @@ export default function DoctorProfile() {
                   </div>
 
                   <Tabs defaultValue='info' className='w-full' onValueChange={setActiveTab} value={activeTab}>
-                    <TabsList className='grid grid-cols-2 p-1 w-full rounded-lg bg-muted/50'>
+                    <TabsList className='grid w-full grid-cols-2 p-1 rounded-lg bg-muted/50'>
                       <TabsTrigger value='info'>Thông tin bác sĩ</TabsTrigger>
                       <TabsTrigger value='reviews'>
                         {hasReviews ? `Đánh giá (${reviewStats.totalReviews})` : 'Đánh giá'}
@@ -290,7 +302,7 @@ export default function DoctorProfile() {
                     <TabsContent value='info' className='mt-6'>
                       <div className='space-y-6'>
                         <div className='space-y-2'>
-                          <div className='flex gap-2 items-center text-primary'>
+                          <div className='flex items-center gap-2 text-primary'>
                             <Users className='w-5 h-5' />
                             <h2 className='text-lg font-semibold'>Giới thiệu</h2>
                           </div>
@@ -300,7 +312,7 @@ export default function DoctorProfile() {
                         </div>
 
                         <div className='space-y-2'>
-                          <div className='flex gap-2 items-center text-primary'>
+                          <div className='flex items-center gap-2 text-primary'>
                             <Languages className='w-5 h-5' />
                             <h2 className='text-lg font-semibold'>Ngôn ngữ</h2>
                           </div>
@@ -314,11 +326,11 @@ export default function DoctorProfile() {
                         </div>
 
                         <div className='space-y-2'>
-                          <div className='flex gap-2 items-center text-primary'>
+                          <div className='flex items-center gap-2 text-primary'>
                             <Award className='w-5 h-5' />
                             <h2 className='text-lg font-semibold'>Thành tựu</h2>
                           </div>
-                          <ul className='pl-7 space-y-1 list-disc text-gray-600'>
+                          <ul className='space-y-1 text-gray-600 list-disc pl-7'>
                             {doctorProfile?.data.achievements.map((achievement, index) => (
                               <li key={index}>{achievement}</li>
                             ))}
@@ -340,7 +352,7 @@ export default function DoctorProfile() {
         <div className='space-y-6'>
           <Card className='overflow-hidden'>
             <CardHeader className='pb-3 bg-primary/5'>
-              <div className='flex gap-2 items-center'>
+              <div className='flex items-center gap-2'>
                 <GraduationCap className='w-5 h-5 text-primary' />
                 <CardTitle>Học vấn</CardTitle>
               </div>
@@ -374,7 +386,7 @@ export default function DoctorProfile() {
 
           <Card className='overflow-hidden'>
             <CardHeader className='pb-3 bg-primary/5'>
-              <div className='flex gap-2 items-center'>
+              <div className='flex items-center gap-2'>
                 <Award className='w-5 h-5 text-primary' />
                 <CardTitle>Chứng chỉ</CardTitle>
               </div>
@@ -383,7 +395,7 @@ export default function DoctorProfile() {
               {isLoading ? (
                 <div className='space-y-4'>
                   {[1, 2].map((i) => (
-                    <div key={i} className='p-3 space-y-2 rounded-lg border'>
+                    <div key={i} className='p-3 space-y-2 border rounded-lg'>
                       <Skeleton className='w-40 h-5' />
                       <Skeleton className='w-3/4 h-4' />
                     </div>
@@ -395,7 +407,7 @@ export default function DoctorProfile() {
                     {doctorProfile?.data.certificates.map((cert, index) => (
                       <div
                         key={index}
-                        className='p-3 rounded-lg border border-gray-100 transition-colors hover:border-primary/20'
+                        className='p-3 transition-colors border border-gray-100 rounded-lg hover:border-primary/20'
                       >
                         <div className='font-medium text-primary'>{cert.name}</div>
                         <div className='text-sm text-gray-700'>Cấp bởi: {cert.issuedBy}</div>
@@ -414,14 +426,14 @@ export default function DoctorProfile() {
         </div>
       </div>
 
-      <Card className='overflow-hidden mt-6'>
-        <CardHeader className='flex flex-row justify-between items-center pb-3 bg-primary/5'>
-          <div className='flex gap-2 items-center'>
+      <Card className='mt-6 overflow-hidden'>
+        <CardHeader className='flex flex-row items-center justify-between pb-3 bg-primary/5'>
+          <div className='flex items-center gap-2'>
             <Calendar className='w-5 h-5 text-primary' />
             <CardTitle>Lịch khám bệnh</CardTitle>
           </div>
-          <Button className='!mt-0 w-fit' variant='outline' onClick={refetchSchedule}>
-            Cập nhật lịch khám
+          <Button className='!mt-0 w-fit group' variant='outline' onClick={refetchSchedule}>
+            Cập nhật lịch khám <RefreshCw className='group-hover:animate-spin' />
           </Button>
         </CardHeader>
         <CardContent className='p-6'>

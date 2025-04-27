@@ -27,7 +27,7 @@ export class ReviewService {
       throw new NotFoundException('Appointment not found')
     }
 
-    if (!appointment.isVideoCallEnded) {
+    if (!appointment.status || appointment.status !== 'completed') {
       throw new BadRequestException('Cannot review: appointment has not been completed')
     }
 

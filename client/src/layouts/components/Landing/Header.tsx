@@ -6,7 +6,7 @@ import { animateScroll as scroll } from 'react-scroll'
 import { useAppSelector } from '@/redux/store'
 import CardUser from '../CardUser'
 import path from '@/constants/path'
-// import { ModalSearch } from '../Modal'
+import { ModalSearch } from '../Modal'
 import { useTranslation } from 'react-i18next'
 import { ModeToggleI18n } from '@/components/Global/mode-toggle-i18'
 import { cn } from '@/lib/utils'
@@ -54,7 +54,7 @@ export const Header = () => {
         <ul className='hidden space-x-2 text-black md:flex '>
           <li>
             <Link
-              to={path.userManage}
+              to={path.landing}
               className={
                 buttonVariants({ effect: 'hoverUnderline', variant: 'link' }) +
                 ' hover:!text-primary !font-normal !text-base'

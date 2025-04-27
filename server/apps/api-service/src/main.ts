@@ -14,6 +14,7 @@ async function bootstrap() {
     options: {
       client: {
         brokers: [config.get<string>('KAFKA_BROKERS')],
+        // brokers: ['localhost:9092'],
         clientId: 'api-service',
         retry: {
           initialRetryTime: 1000,

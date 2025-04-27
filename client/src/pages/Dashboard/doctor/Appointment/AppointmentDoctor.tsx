@@ -5,16 +5,20 @@ import { columns } from './components/columns'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import AppointmentDetail from './components/AppointmentDetail'
 import { Appointment } from '@/types/appointment.type'
+import { useAppSelector } from '@/redux/store'
+import { bufferToHex } from '@/utils/utils'
 
 const PAGE_SIZE = 10
 
 export default function AppointmentDoctor() {
   const [page, setPage] = useState(1)
   const [selectedAppointment, setSelectedAppointment] = useState<string | null>(null)
-
+  const { user } = useAppSelector((state) => state.authState)
+  const doctorId = user?._id ? bufferToHex(user._id) : ''
   const { data, isFetching, refetch } = useGetAllAppointmentsQuery({
     page,
-    limit: PAGE_SIZE
+    limit: PAGE_SIZE,
+    doctorId: doctorId
   })
 
   return (

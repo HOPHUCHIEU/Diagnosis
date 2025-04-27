@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -13,7 +12,6 @@ import { DoctorProfile } from '@/types/doctor.type'
 
 export default function ListDoctor({ listDoctor }: { listDoctor: DoctorProfile[] }) {
   const navigate = useNavigate()
-  const { t } = useTranslation('landing')
   const [searchTerm, setSearchTerm] = useState('')
 
   const filteredDoctors = listDoctor.filter((doctor) => {
@@ -33,15 +31,17 @@ export default function ListDoctor({ listDoctor }: { listDoctor: DoctorProfile[]
     <section className='px-6 py-16 bg-gray-50 sm:px-0 sm:-mx-1/1'>
       <div className='container px-4 mx-auto'>
         <div className='mx-auto mb-16 max-w-2xl text-center'>
-          <h2 className='text-3xl font-bold md:text-4xl'>{t('listDoctor.title')}</h2>
-          <p className='mt-4 text-gray-500'>{t('listDoctor.subtitle')}</p>
+          <h2 className='text-3xl font-bold md:text-4xl'>Đặt lịch khám trực tuyến</h2>
+          <p className='mt-4 text-gray-500'>
+            Đặt lịch khám với các bác sĩ chuyên khoa hàng đầu, tiết kiệm thời gian chờ đợi
+          </p>
 
           {/* Add search input */}
           <div className='relative mx-auto mt-8 max-w-md bg-white'>
             <Search className='absolute left-3 top-1/2 w-4 h-4 -translate-y-1/2' />
             <Input
               type='text'
-              placeholder={t('listDoctor.search')}
+              placeholder='Tìm kiếm theo tên bác sĩ hoặc chuyên khoa...'
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className='pl-10 rounded-full'
@@ -77,7 +77,7 @@ export default function ListDoctor({ listDoctor }: { listDoctor: DoctorProfile[]
                             </h3>
                             <div className='flex gap-1 items-center mt-1 text-sm text-gray-600'>
                               <Award className='w-3 h-3 text-amber-500' />
-                              <span>{doctor.yearsOfExperience} {t('listDoctor.experience')}</span>
+                              <span>{doctor.yearsOfExperience} năm kinh nghiệm</span>
                             </div>
                           </div>
                         </div>
@@ -118,7 +118,7 @@ export default function ListDoctor({ listDoctor }: { listDoctor: DoctorProfile[]
                             iconPlacement='right'
                             onClick={() => navigate(`/doctor/${bufferToHex(doctor._id)}`)}
                           >
-                            {t('listDoctor.bookAppointment')}
+                            Đặt lịch khám
                           </Button>
                         </div>
                       </div>
@@ -128,7 +128,7 @@ export default function ListDoctor({ listDoctor }: { listDoctor: DoctorProfile[]
               ) : (
                 <CarouselItem className='pl-4 basis-full'>
                   <div className='py-8 text-center text-gray-500'>
-                    {t('listDoctor.noResults')}
+                    Không tìm thấy bác sĩ phù hợp với tìm kiếm của bạn
                   </div>
                 </CarouselItem>
               )}

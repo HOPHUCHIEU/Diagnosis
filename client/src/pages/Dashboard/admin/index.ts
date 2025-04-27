@@ -1,4 +1,4 @@
-export { default as DashboardAdmin } from './Dashboard.tsx'
+export { default as DashboardAdmin } from './Dashboard'
 export { default as UserManage } from './UserManage'
 export { default as SettingsAdmin } from './Settings'
 export { default as ProfileAdmin } from './Profile'

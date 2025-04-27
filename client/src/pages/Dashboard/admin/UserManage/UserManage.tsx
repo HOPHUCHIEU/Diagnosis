@@ -20,10 +20,10 @@ export default function UserManage() {
 
   return (
     <div className='p-6'>
-      <div className='flex justify-between items-center mb-4'>
+      <div className='flex items-center justify-between mb-4'>
         <h1 className='text-2xl font-bold'>Quản lý người dùng</h1>
         <Button effect='ringHover' size='sm' className='!h-8' onClick={() => setOpen(true)}>
-          <UserPlus className='mr-2 w-4 h-4' />
+          <UserPlus className='w-4 h-4 mr-2' />
           Thêm người dùng
         </Button>
       </div>

@@ -2,7 +2,7 @@ import { Type } from 'class-transformer'
 import {
   ArrayMinSize,
   IsArray,
-  IsDate,
+  IsDateString,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -13,8 +13,7 @@ import { DailyScheduleDto } from './daily-schedule.dto'
 
 export class DayScheduleEntry {
   @IsNotEmpty()
-  @IsDate()
-  @Type(() => Date)
+  @IsDateString()
   date: Date
 
   @ValidateNested()

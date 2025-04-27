@@ -1,41 +1,44 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 import customFetchBase from './customFetchBase'
+import { ApiResponse } from '@/types/api.type'
+
+interface Review {
+  _id: Buffer
+  patient: {
+    _id: Buffer
+    profile: {
+      _id: Buffer
+      firstName: string
+      lastName: string
+    }
+  }
+  doctor: {
+    _id: Buffer
+    profile: {
+      _id: Buffer
+      firstName: string
+      lastName: string
+    }
+  }
+  appointment: {
+    _id: Buffer
+    appointmentDate: string
+    type: string
+  }
+  rating: number
+  comment: string
+  isVerified: boolean
+  tags: string[]
+  isVisible: boolean
+  createdAt: string
+  updatedAt: string
+  adminReply?: string
+  adminReplyAt?: string
+}
 
 interface ReviewResponse {
   data: {
-    reviews: Array<{
-      _id: Buffer
-      patient: {
-        _id: Buffer
-        profile: {
-          _id: Buffer
-          firstName: string
-          lastName: string
-        }
-      }
-      doctor: {
-        _id: Buffer
-        profile: {
-          _id: Buffer
-          firstName: string
-          lastName: string
-        }
-      }
-      appointment: {
-        _id: Buffer
-        appointmentDate: string
-        type: string
-      }
-      rating: number
-      comment: string
-      isVerified: boolean
-      tags: string[]
-      isVisible: boolean
-      createdAt: string
-      updatedAt: string
-      adminReply?: string
-      adminReplyAt?: string
-    }>
+    reviews: Review[]
     pagination: {
       total: number
       page: number
@@ -57,6 +60,25 @@ interface RespondToReviewRequest {
   response: string
 }
 
+interface GetAllReviewsParams {
+  page?: number
+  limit?: number
+  isVisible?: boolean
+}
+
+interface ToggleVisibilityResponse {
+  message: string
+}
+
+interface DeleteReviewResponse {
+  message: string
+}
+
+interface CreateReviewResponse {
+  message: string
+  data: Review
+}
+
 export const reviewApi = createApi({
   reducerPath: 'reviewApi',
   baseQuery: customFetchBase,
@@ -70,7 +92,22 @@ export const reviewApi = createApi({
       providesTags: (result, error, appointmentId) => [{ type: 'Review', id: appointmentId }]
     }),
 
-    createReview: builder.mutation<any, CreateReviewRequest>({
+    getAllReviews: builder.query<ReviewResponse, GetAllReviewsParams>({
+      query: (params) => {
+        const queryParams = new URLSearchParams()
+        if (params && params.page !== undefined) queryParams.append('page', params.page.toString())
+        if (params && params.limit !== undefined) queryParams.append('limit', params.limit.toString())
+        if (params && params.isVisible !== undefined) queryParams.append('isVisible', params.isVisible.toString())
+
+        return {
+          url: `/review/all?${queryParams.toString()}`,
+          method: 'GET'
+        }
+      },
+      providesTags: [{ type: 'Review', id: 'LIST' }]
+    }),
+
+    createReview: builder.mutation<ApiResponse<CreateReviewResponse>, CreateReviewRequest>({
       query: (reviewData) => ({
         url: '/review/create',
         method: 'POST',
@@ -79,7 +116,7 @@ export const reviewApi = createApi({
       invalidatesTags: (result, error, { appointmentId }) => [{ type: 'Review', id: appointmentId }]
     }),
 
-    respondToReview: builder.mutation<any, RespondToReviewRequest>({
+    respondToReview: builder.mutation<ApiResponse<{ message: string }>, RespondToReviewRequest>({
       query: (responseData) => ({
         url: '/review/respond',
         method: 'POST',
@@ -88,7 +125,7 @@ export const reviewApi = createApi({
       invalidatesTags: (result, error, { reviewId }) => [{ type: 'Review', id: 'LIST' }]
     }),
 
-    deleteReview: builder.mutation<any, string>({
+    deleteReview: builder.mutation<ApiResponse<DeleteReviewResponse>, string>({
       query: (reviewId) => ({
         url: `/review/delete/${reviewId}`,
         method: 'DELETE'
@@ -96,7 +133,10 @@ export const reviewApi = createApi({
       invalidatesTags: (result, error, reviewId) => [{ type: 'Review', id: 'LIST' }]
     }),
 
-    toggleReviewVisibility: builder.mutation<any, { reviewId: string; isVisible: boolean }>({
+    toggleReviewVisibility: builder.mutation<
+      ApiResponse<ToggleVisibilityResponse>,
+      { reviewId: string; isVisible: boolean }
+    >({
       query: ({ reviewId, isVisible }) => ({
         url: `/review/${reviewId}/visibility`,
         method: 'PATCH',
@@ -109,6 +149,7 @@ export const reviewApi = createApi({
 
 export const {
   useGetAppointmentReviewsQuery,
+  useGetAllReviewsQuery,
   useCreateReviewMutation,
   useRespondToReviewMutation,
   useDeleteReviewMutation,

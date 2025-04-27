@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
+import { Address } from 'apps/api-service/src/account/address/entities/address.entity'
 import { UserProfile } from 'apps/api-service/src/account/user-profile/entities/user-profile.entity'
 import { Role } from 'apps/api-service/src/auth/role.enum'
 import { Transform, Type } from 'class-transformer'

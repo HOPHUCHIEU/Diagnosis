@@ -70,4 +70,4 @@ export const baseTemplate = (title: string, content: string) => `
         </div>
     </div>
 </body>
-</html>`
+</html>`;

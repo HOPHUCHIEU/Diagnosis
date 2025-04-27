@@ -48,7 +48,6 @@ export class AppointmentService {
 
   async create(user: User, createAppointmentDto: CreateAppointmentDto) {
     const { patient, doctor, appointmentDate, startTime, endTime, type, medicalInfo } = createAppointmentDto
-
     if (user.role === Role.User && patient !== user._id.toString()) {
       throw new BadRequestException('Cannot create appointment for another user')
     }
@@ -60,13 +59,12 @@ export class AppointmentService {
     this.validateTimeFormat(startTime, endTime)
     this.validateTimeSequence(startTime, endTime)
 
-    // Get doctor's work schedule for the appointment date
+    console.log('Appointment Date:', appointmentDateTime)
     const doctorWorkSchedule = await this.getValidDoctorWorkSchedule(doctor, appointmentDateTime)
     if (!doctorWorkSchedule) {
       throw new BadRequestException('Doctor does not have a valid work schedule for this date')
     }
 
-    // Parse time components for validation
     const [startHour, startMinute] = startTime.split(':').map(Number)
     const [endHour, endMinute] = endTime.split(':').map(Number)
 
@@ -91,6 +89,24 @@ export class AppointmentService {
     // Check for scheduling conflicts
     await this.checkForConflicts(doctor, appointmentDateTime, startTime, endTime)
 
+    const userPackage = await this.userPackageModel
+      .findOne({
+        user: user._id,
+        status: UserPackageStatus.Active,
+        expiryDate: { $gte: new Date() },
+        remainingAppointments: { $gt: 0 }
+      })
+      .sort({ expiryDate: 1 })
+      .exec()
+
+    if (!userPackage) {
+      throw new BadRequestException('Patient has no active package with remaining appointments')
+    }
+
+    await this.userPackageModel.findByIdAndUpdate(userPackage._id, {
+      $inc: { remainingAppointments: -1, totalAppointments: 1 }
+    })
+
     const appointment = new this.appointmentModel({
       patient,
       doctor,
@@ -100,33 +116,32 @@ export class AppointmentService {
       startDateTime,
       endDateTime,
       type,
-      status: AppointmentStatus.Pending,
+      status: AppointmentStatus.Confirmed,
       medicalInfo,
       appointmentFee,
+      videoCallInfo: null,
+      isVideoCallStarted: false,
+      isVideoCallEnded: false,
       createdBy: user._id
     })
 
     // Initialize video call info if needed
-    if (type === AppointmentType.VIDEO_CALL) {
-      appointment.isVideoCallStarted = false
-    }
+    // if (type === AppointmentType.VIDEO_CALL) {
+    //   appointment.isVideoCallStarted = false
+    // }
 
     const savedAppointment = await appointment.save()
     return savedAppointment.toObject()
   }
 
   private async getValidDoctorWorkSchedule(doctorId: string, appointmentDate: Date): Promise<WorkSchedule | null> {
-    // Format date to match exact date without time
-    const date = new Date(appointmentDate)
-    date.setHours(0, 0, 0, 0)
-
-    // Find schedule for the specific date with session approval
     return await this.workScheduleModel
       .findOne({
         doctor: new Types.ObjectId(doctorId),
+        // date: { $gte: appointmentDate },
         date: {
-          $gte: new Date(date.setHours(0, 0, 0, 0)),
-          $lte: new Date(date.setHours(23, 59, 59, 999))
+          $gte: appointmentDate.setHours(0, 0, 0),
+          $lte: appointmentDate.setHours(23, 59, 59)
         },
         $or: [
           { 'schedules.morningApprovalStatus': approvalStatus.Approved },
@@ -144,7 +159,8 @@ export class AppointmentService {
     endHour: number,
     endMinute: number
   ) {
-    // Check if appointment time falls within any of the doctor's approved working periods
+    console.log('Validating against doctor hours:', daySchedule)
+    console.log('Requested time:', startHour, startMinute, endHour, endMinute)
     let isTimeSlotValid = false
     const requestedStartMinutes = startHour * 60 + startMinute
     const requestedEndMinutes = endHour * 60 + endMinute
@@ -240,10 +256,34 @@ export class AppointmentService {
   }
 
   private validateAppointmentDateTime(appointmentDate: string | Date) {
+    // const appointmentDateTime = new Date(appointmentDate)
+    // console.log('Appointment Date:', appointmentDateTime)
+    // if (!isValid(appointmentDateTime) || isPast(appointmentDateTime)) {
+    //   throw new BadRequestException('Date is invalid or in the past')
+    // }
+    // return appointmentDateTime
     const appointmentDateTime = new Date(appointmentDate)
-    if (!isValid(appointmentDateTime) || isPast(appointmentDateTime)) {
-      throw new BadRequestException('Date is invalid or in the past')
+    console.log('Appointment Date:', appointmentDateTime)
+
+    // Check if date is valid
+    if (!isValid(appointmentDateTime)) {
+      throw new BadRequestException('Date is invalid')
     }
+
+    // Compare dates only (ignoring time component)
+    const today = new Date()
+    const isBeforeToday =
+      appointmentDateTime.getFullYear() < today.getFullYear() ||
+      (appointmentDateTime.getFullYear() === today.getFullYear() &&
+        appointmentDateTime.getMonth() < today.getMonth()) ||
+      (appointmentDateTime.getFullYear() === today.getFullYear() &&
+        appointmentDateTime.getMonth() === today.getMonth() &&
+        appointmentDateTime.getDate() < today.getDate())
+
+    if (isBeforeToday) {
+      throw new BadRequestException('Appointment date cannot be in the past')
+    }
+
     return appointmentDateTime
   }
 
@@ -653,8 +693,6 @@ export class AppointmentService {
     if (appointment.status !== AppointmentStatus.Pending) {
       throw new BadRequestException(`Cannot approve appointment with status ${appointment.status}`)
     }
-
-    console.log(appointment)
 
     const userPackage = await this.userPackageModel
       .findOne({

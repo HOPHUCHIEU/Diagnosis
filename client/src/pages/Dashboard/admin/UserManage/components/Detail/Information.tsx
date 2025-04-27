@@ -39,7 +39,7 @@ export default function Information({ user, onClose }: Props) {
       phone: user?.profile?.phone,
       gender: user?.profile?.gender,
       birth: user?.profile?.birth ? new Date(user?.profile?.birth) : null,
-      address: user?.profile?.address,
+      // address: user?.profile?.address,
       role: user.role,
       disabled: user.disabled,
       isVerified: user.isVerified
@@ -236,7 +236,7 @@ export default function Information({ user, onClose }: Props) {
           />
         </div>
 
-        <FormField
+        {/* <FormField
           control={form.control}
           name='address'
           render={({ field }) => (
@@ -248,7 +248,7 @@ export default function Information({ user, onClose }: Props) {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
 
         <div className='grid grid-cols-3 gap-4'>
           <FormField

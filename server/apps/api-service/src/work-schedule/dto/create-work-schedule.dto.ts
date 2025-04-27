@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer'
-import { ArrayMinSize, IsDate, IsNotEmpty, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator'
+import { IsDateString, IsNotEmpty, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator'
 import { DailyScheduleDto } from 'apps/api-service/src/work-schedule/dto/daily-schedule.dto'
 
 export class CreateWorkScheduleDto {
@@ -8,8 +8,7 @@ export class CreateWorkScheduleDto {
   doctorId: string
 
   @IsNotEmpty()
-  @IsDate()
-  @Type(() => Date)
+  @IsDateString()
   date: Date
 
   @ValidateNested()

@@ -6,7 +6,7 @@ import DefaultLayout from './layouts/DefaultLayout'
 import DashboardLayout from './layouts/DashboardLayout'
 import { SignIn, SignUp, VerifyEmail, ForgotPassword } from './pages/NotAuth'
 import { Page_404 } from './pages/NotFound'
-import { About, DoctorProfile, Landing, Service } from './pages/Landing'
+import { About, DoctorProfile, Landing } from './pages/Landing'
 import { Profile } from './pages/Dashboard/user'
 import {
   AppointmentDoctor,
@@ -25,7 +25,7 @@ import {
   UserManage,
   WorkSchedule
 } from './pages/Dashboard/admin'
-// import VideoRoom from './pages/VideoCall/VideoRoom'
+import VideoRoom from './pages/VideoCall/VideoRoom'
 
 type ProtectedRouteProps = {
   allowedRole: 'user' | 'admin' | 'doctor'
@@ -67,10 +67,6 @@ const publicRoutes = [
     element: <About />
   },
   {
-    path: path.services,
-    element: <Service />
-  },
-  {
     path: path.profileDoctorPublic,
     element: <DoctorProfile />
   }
@@ -84,10 +80,10 @@ const userRoutes = [
 ]
 
 const adminRoutes = [
-  // {
-  //   path: path.dashboard_admin,
-  //   element: <DashboardAdmin />
-  // },
+  {
+    path: path.dashboard_admin,
+    element: <DashboardAdmin />
+  },
   {
     path: path.userManage,
     element: <UserManage />
@@ -119,10 +115,10 @@ const adminRoutes = [
 ]
 
 const doctorRoutes = [
-  // {
-  //   path: path.dashboard,
-  //   element: <DashboardDoctor />
-  // },
+  {
+    path: path.dashboard,
+    element: <DashboardDoctor />
+  },
   {
     path: path.profileDoctor,
     element: <ProfileDoctor />
@@ -141,12 +137,12 @@ const doctorRoutes = [
   }
 ]
 
-// const videoCallRoutes = [
-//   {
-//     path: path.videoRoom,
-//     element: <VideoRoom />
-//   }
-// ]
+const videoCallRoutes = [
+  {
+    path: path.videoRoom,
+    element: <VideoRoom />
+  }
+]
 
 const ProtectedRouteComponent = memo(({ allowedRole }: ProtectedRouteProps) => {
   const { isAuthenticated, roleUser } = useAuth()
@@ -221,11 +217,11 @@ const UseRouteElements = () => {
         element: <ProtectedRouteComponent allowedRole='doctor' />,
         children: doctorRoutes
       },
-      // {
-      //   path: '',
-      //   element: <NoLayoutComponent />,
-      //   children: videoCallRoutes
-      // },
+      {
+        path: '',
+        element: <NoLayoutComponent />,
+        children: videoCallRoutes
+      },
       {
         path: '*',
         element: (

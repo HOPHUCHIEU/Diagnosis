@@ -4,6 +4,20 @@ import { logOut, setAuthenticated, setRoleUser, setUser } from '../features/auth
 import { CreateUserInput, UpdateInfoUserInput, User } from '@/types/user.type'
 import Cookies from 'js-cookie'
 
+export interface DashboardData {
+  totalUsers: number
+  totalDoctors: number
+  totalAppointments: number
+  totalRevenue: number
+  totalPackageSales: number
+  appointmentStatusBreakdown: {
+    cancelled: number
+    confirmed: number
+    completed: number
+  }
+  // Các trường dữ liệu khác nếu có
+}
+
 export const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery: customFetchBase,
@@ -96,6 +110,16 @@ export const userApi = createApi({
         body: { id }
       }),
       invalidatesTags: ['User']
+    }),
+    dashboard: build.query<{ data: DashboardData }, null>({
+      query: (branchId) => `statistical/dashboard`,
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled
+        } catch (error) {
+          console.log('ERROR: ', error)
+        }
+      }
     })
   })
 })
@@ -106,5 +130,6 @@ export const {
   useCreateUserMutation,
   useGetAllUserQuery,
   useAdminUpdateUserMutation,
-  useDeleteUserMutation
+  useDeleteUserMutation,
+  useDashboardQuery
 } = userApi

@@ -128,27 +128,90 @@ export class DoctorProfileService {
 
   async findAllSpecialties(
     query: {
-      doctorId?: string
       page?: number
       limit?: number
+      specialties?: string[]
+      isAvailable?: boolean
       search?: string
       sortBy?: string
       sortOrder?: 'asc' | 'desc'
     } = {}
   ) {
-    const { doctorId, page = 1, limit = 10, search, sortBy = 'createdAt', sortOrder = 'desc' } = query
-    if (doctorId) {
-      const doctorProfile = await this.doctorProfileModel.findOne({ doctor: doctorId }).lean().exec()
-      if (!doctorProfile) {
-        throw new NotFoundException('Doctor profile not found')
+    const { page = 1, limit = 10, specialties, isAvailable, search, sortBy = 'createdAt', sortOrder = 'desc' } = query
+
+    const skip = (page - 1) * limit
+    const filter: any = {}
+
+    // Thêm điều kiện lọc theo chuyên khoa
+    if (specialties && specialties.length > 0) {
+      filter.specialties = { $in: specialties }
+    }
+
+    // Lọc theo trạng thái làm việc
+    if (isAvailable !== undefined) {
+      filter.isAvailable = isAvailable
+    }
+
+    if (search) {
+      // Lấy danh sách ID của các bác sĩ thỏa mãn điều kiện tìm kiếm
+      const doctors = await this.userModel
+        .find({
+          role: Role.Doctor,
+          $or: [{ firstName: { $regex: search, $options: 'i' } }, { lastName: { $regex: search, $options: 'i' } }]
+        })
+        .select('_id')
+        .exec()
+
+      const doctorIds = doctors.map((doctor) => doctor._id)
+      if (doctorIds.length > 0) {
+        filter.doctor = { $in: doctorIds }
+      } else {
+        // Nếu không tìm thấy bác sĩ nào, trả về mảng rỗng
+        return {
+          data: [],
+          total: 0,
+          page,
+          limit,
+          totalPages: 0
+        }
       }
-      return {
-        data: doctorProfile.specialties,
-        total: doctorProfile.specialties.length,
-        page: 1,
-        limit: doctorProfile.specialties.length,
-        totalPages: 1
-      }
+    }
+
+    // Tính tổng số bản ghi
+    const total = await this.doctorProfileModel.countDocuments(filter)
+    const totalPages = Math.ceil(total / limit)
+
+    // Xây dựng pipeline sort
+    const sortOption: any = {}
+    sortOption[sortBy] = sortOrder === 'asc' ? 1 : -1
+
+    // Truy vấn dữ liệu với các điều kiện
+    const doctorProfiles = await this.doctorProfileModel
+      .find(filter)
+      .sort(sortOption)
+      .skip(skip)
+      .limit(limit)
+      .populate({
+        path: 'doctor',
+        select: 'email role isVerified profile',
+        populate: {
+          path: 'profile',
+          select: 'firstName lastName avatar birth gender phone address fullName',
+          populate: {
+            path: 'address',
+            select: 'street district city province country postalCode'
+          }
+        }
+      })
+      .lean()
+      .exec()
+
+    return {
+      data: doctorProfiles,
+      total,
+      page,
+      limit,
+      totalPages
     }
   }
 

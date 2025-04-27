@@ -4,7 +4,7 @@ import { DoctorProfile } from 'apps/api-service/src/account/doctor-profile/entit
 import { Document, Types } from 'mongoose'
 import { Type } from 'class-transformer'
 import { AppointmentStatus, AppointmentType, VideoProvider } from 'apps/api-service/src/appointment/appointment.enum'
-// import { Payment } from 'apps/api-service/src/payment/entities/payment.entity'
+import { Payment } from 'apps/api-service/src/payment/entities/payment.entity'
 
 @Schema({ _id: false })
 class MedicalInfo {
@@ -70,9 +70,9 @@ export class Appointment extends Document {
   @Prop({ type: MedicalInfo })
   medicalInfo: MedicalInfo // Thông tin y tế
 
-  // @Prop({ type: Types.ObjectId, ref: Payment.name })
-  // @Type(() => Payment)
-  // payment: Payment | Types.ObjectId // Reference to payment
+  @Prop({ type: Types.ObjectId, ref: Payment.name })
+  @Type(() => Payment)
+  payment: Payment | Types.ObjectId // Reference to payment
 
   @Prop({ type: Number, required: true })
   appointmentFee: number // Thông tin thanh toán

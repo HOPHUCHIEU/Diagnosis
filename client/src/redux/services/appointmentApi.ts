@@ -19,6 +19,7 @@ interface CreateAppointmentInput {
 interface GetAppointmentsParams {
   page?: number
   limit?: number
+  doctorId?: string
 }
 
 interface VideoMeeting {

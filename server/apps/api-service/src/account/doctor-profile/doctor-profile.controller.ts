@@ -22,16 +22,16 @@ export class DoctorProfileController {
   findAll(
     @Query('page') page = 1,
     @Query('limit') limit = 10,
+    @Query('specialties') specialties?: string[],
     @Query('search') search?: string,
     @Query('sortBy') sortBy?: string,
     @Query('sortOrder') sortOrder?: 'asc' | 'desc'
   ) {
-    return this.doctorProfileService.findAll({ page: +page, limit: +limit, search, sortBy, sortOrder })
+    return this.doctorProfileService.findAll({ page: +page, limit: +limit, specialties, search, sortBy, sortOrder })
   }
 
   @Get('/specialties')
   findAllSpecialties(
-    @Query('doctorId') doctorId?: string,
     @Query('page') page = 1,
     @Query('limit') limit = 10,
     @Query('search') search?: string,
@@ -39,7 +39,6 @@ export class DoctorProfileController {
     @Query('sortOrder') sortOrder?: 'asc' | 'desc'
   ) {
     return this.doctorProfileService.findAllSpecialties({
-      doctorId,
       page: +page,
       limit: +limit,
       search,

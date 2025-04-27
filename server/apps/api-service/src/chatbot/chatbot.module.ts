@@ -4,9 +4,19 @@ import { ChatbotController } from './chatbot.controller'
 import { ClientsModule, Transport } from '@nestjs/microservices'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { ChatbotGateway } from 'apps/api-service/src/chatbot/chatbot.gateway'
+import { JwtModule } from '@nestjs/jwt'
 
 @Module({
   imports: [
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get<string>('JWT_SECRET_KEY'),
+        signOptions: { expiresIn: '1d' }
+      })
+    }),
+    ConfigModule,
     ClientsModule.registerAsync([
       {
         name: 'KAFKA_CLIENT',
@@ -17,6 +27,7 @@ import { ChatbotGateway } from 'apps/api-service/src/chatbot/chatbot.gateway'
             client: {
               clientId: 'api-chatbot',
               brokers: [configService.get<string>('KAFKA_BROKERS')],
+              // brokers: ['localhost:9092'],
               retry: {
                 initialRetryTime: 1000,
                 retries: 10

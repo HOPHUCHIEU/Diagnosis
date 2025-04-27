@@ -19,6 +19,21 @@ export class MailService {
     })
   }
 
+  async sendTemporaryPassword(email: string, code: string) {
+    await this.mailerService.sendMail({
+      to: email,
+      subject: `Mật khẩu tạm thời`,
+      html: baseTemplate(
+        'Mật khẩu tạm thời',
+        confirmationCodeTemplate(
+          'Chúng tôi đã nhận được yêu cầu thay đổi mật khẩu của bạn, đây là mật khẩu mới của bạn',
+          email,
+          code
+        )
+      )
+    })
+  }
+
   async sendInviteCode(email: string, code: string) {
     await this.mailerService.sendMail({
       to: email,

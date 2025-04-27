@@ -10,11 +10,11 @@ import {
 } from 'lucide-react'
 
 export const sidebarAdmin = [
-  // {
-  //   label: 'Dashboard',
-  //   icon: <LayoutDashboard className='flex-shrink-0 w-5 h-5' />,
-  //   href: path.dashboard_admin
-  // },
+  {
+    label: 'Dashboard',
+    icon: <LayoutDashboard className='flex-shrink-0 w-5 h-5' />,
+    href: path.dashboard_admin
+  },
   {
     label: 'Quản lý người dùng',
     icon: <UsersRound className='flex-shrink-0 w-5 h-5' />,
@@ -47,11 +47,11 @@ export const sidebarAdmin = [
   }
 ]
 export const sidebarDoctor = [
-  // {
-  //   label: 'Dashboard',
-  //   icon: <LayoutDashboard className='flex-shrink-0 w-5 h-5' />,
-  //   href: path.dashboard
-  // },
+  {
+    label: 'Dashboard',
+    icon: <LayoutDashboard className='flex-shrink-0 w-5 h-5' />,
+    href: path.dashboard
+  },
   {
     label: 'Lịch làm việc',
     icon: <CalendarDays className='flex-shrink-0 w-5 h-5' />,

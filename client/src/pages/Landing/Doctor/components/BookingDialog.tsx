@@ -11,7 +11,6 @@ import { useAppSelector } from '@/redux/store'
 import { bufferToHex } from '@/utils/utils'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import BuyPackageDialog from '@/pages/Dashboard/user/AppointmentStats/components/BuyPackageDialog'
-import { useTranslation } from 'react-i18next'
 import { TicketIcon, PlusCircleIcon } from 'lucide-react'
 
 interface Props {
@@ -26,7 +25,8 @@ interface Props {
 export default function BookingDialog({ doctorId, doctorProfileId, date, timeSlot, onClose, onBookingSuccess }: Props) {
   const user = useAppSelector((state) => state.authState.user)
   const [createAppointment, { isLoading }] = useCreateAppointmentMutation()
-  const { data: packageData, isLoading: isLoadingPackage } = useGetMyAppointmentPackageQuery(null)
+  const { data: packageData, isFetching: isLoadingPackage, refetch } = useGetMyAppointmentPackageQuery(null)
+
   const [type, setType] = useState<'video_call' | 'in_person'>('video_call')
   const [symptoms, setSymptoms] = useState('')
   const [showBuyPackage, setShowBuyPackage] = useState(false)
@@ -75,7 +75,7 @@ export default function BookingDialog({ doctorId, doctorProfileId, date, timeSlo
 
       // Đóng thông báo loading nếu có
       toast.dismiss()
-
+      refetch()
       toast.success(CustomNotification, {
         data: {
           title: 'Thành công!',
@@ -89,7 +89,7 @@ export default function BookingDialog({ doctorId, doctorProfileId, date, timeSlo
     } catch (error) {
       // Đóng thông báo loading nếu có
       toast.dismiss()
-
+      refetch()
       // Hiển thị thông báo lỗi
       toast.error(CustomNotification, {
         data: {
@@ -111,8 +111,8 @@ export default function BookingDialog({ doctorId, doctorProfileId, date, timeSlo
       <h2 className='text-lg font-semibold'>Xác nhận đặt lịch khám</h2>
 
       {/* Hiển thị số lượt khám còn lại */}
-      <div className='flex justify-between items-center p-3 bg-blue-50 rounded-md'>
-        <div className='flex gap-2 items-center'>
+      <div className='flex items-center justify-between p-3 rounded-md bg-blue-50'>
+        <div className='flex items-center gap-2'>
           <TicketIcon className='w-5 h-5 text-blue-500 min-w-5' />
           <span className='text-sm'>
             {isLoadingPackage
@@ -164,7 +164,7 @@ export default function BookingDialog({ doctorId, doctorProfileId, date, timeSlo
         />
       </div>
 
-      <div className='flex gap-2 justify-end'>
+      <div className='flex justify-end gap-2'>
         <Button variant='outline' onClick={onClose}>
           Hủy
         </Button>

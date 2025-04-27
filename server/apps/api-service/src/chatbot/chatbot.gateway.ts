@@ -9,12 +9,15 @@ import {
 import { Server, Socket } from 'socket.io'
 import { ChatbotService } from './chatbot.service'
 import { SendMessageDto } from './dto/chatbot.dto'
+import { UnauthorizedException } from '@nestjs/common'
+import { JwtService } from '@nestjs/jwt'
+import { ConfigService } from '@nestjs/config'
 
 @WebSocketGateway({
   cors: {
     origin: '*'
   },
-  port: 5001,
+  port: 5000,
   namespace: 'chatbot'
 })
 export class ChatbotGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
@@ -23,18 +26,58 @@ export class ChatbotGateway implements OnGatewayInit, OnGatewayConnection, OnGat
 
   private userSockets: Map<string, Socket> = new Map()
 
-  constructor(private readonly chatbotService: ChatbotService) {}
+  constructor(
+    private readonly chatbotService: ChatbotService,
+    private readonly jwtService: JwtService,
+    private readonly configService: ConfigService
+  ) {}
 
   afterInit(server: Server) {
     console.log('WebSocket Gateway Initialized')
   }
 
   handleConnection(client: Socket) {
-    console.log('Client connected:', client.id)
-    const userId = client.handshake.query.userId as string
-    if (userId) {
-      this.userSockets.set(userId, client)
-      console.log(`Client connected: ${userId}`)
+    try {
+      console.log('Client connected:', client.id)
+      const token =
+        client.handshake.auth.token ||
+        client.handshake.headers.authorization?.split(' ')[1] ||
+        (client.handshake.query.token as string)
+
+      if (!token) {
+        client.emit('error', { message: 'Authentication error: Token is required' })
+        client.disconnect()
+        return
+      }
+
+      try {
+        const payload = this.jwtService.verify(token, {
+          secret: this.configService.get<string>('JWT_SECRET_KEY')
+        })
+
+        if (!payload || !payload.id) {
+          client.emit('error', { message: 'Authentication error: Invalid token' })
+          client.disconnect()
+          return
+        }
+
+        const userId = payload.id
+
+        client.data = { ...client.data, userId }
+        this.userSockets.set(userId, client)
+
+        client.emit('connected', { userId })
+      } catch (jwtError) {
+        if (jwtError.name === 'TokenExpiredError') {
+          client.emit('error', { message: 'Authentication error: Token has expired' })
+        } else {
+          client.emit('error', { message: 'Authentication error: Invalid token' })
+        }
+        client.disconnect()
+      }
+    } catch (error) {
+      client.emit('error', { message: 'Server error during authentication' })
+      client.disconnect()
     }
   }
 
@@ -48,14 +91,17 @@ export class ChatbotGateway implements OnGatewayInit, OnGatewayConnection, OnGat
 
   @SubscribeMessage('sendMessage')
   async handleMessage(client: Socket, payload: SendMessageDto) {
-    // Lưu socket connection của người dùng
-    this.userSockets.set(payload.userId, client)
+    const userId = client.data?.userId
+
+    if (!userId) {
+      return { event: 'error', data: 'Unauthorized' }
+    }
 
     console.log('Message received:', payload)
-    // Gửi tin nhắn đến chatbot qua Kafka
     const payloadKafka = {
-      userId: payload.userId,
-      messageId: payload.userId,
+      userId: userId,
+      messageId: userId,
+      token: client.handshake.auth.token,
       content: payload.message,
       timestamp: new Date().toISOString()
     }
@@ -69,6 +115,7 @@ export class ChatbotGateway implements OnGatewayInit, OnGatewayConnection, OnGat
     const userSocket = this.userSockets.get(userId)
     if (userSocket) {
       userSocket.emit('chatbotResponse', { userId, message })
+      console.log(`Sent message to user ${userId}: ${message}`)
     }
   }
 }

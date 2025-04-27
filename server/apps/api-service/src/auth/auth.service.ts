@@ -160,6 +160,31 @@ export class AuthService {
     }
   }
 
+  async forgotPasswordNew(forgotPasswordDto: ForgotPasswordDto) {
+    const user = await this.userService.getUserByEmail(forgotPasswordDto.email)
+    if (!user) {
+      throw new NotFoundException('USER_NOT_FOUND')
+    }
+
+    const randomPassword = randomBytes(8).toString('hex')
+
+    const hashedPassword = await bcrypt.hash(randomPassword, 10)
+
+    await this.userService.updateUser(user, {
+      password: hashedPassword,
+      confirmationCode: null,
+      confirmationCodeExpired: null
+    })
+
+    this.mailService.sendTemporaryPassword(forgotPasswordDto.email, randomPassword).catch((error) => {
+      console.log(error)
+    })
+
+    return {
+      message: 'A new temporary password has been sent to your email'
+    }
+  }
+
   async resetPassword(resetPasswordDto: ResetPasswordDto) {
     const user = await this.userService.getUserByEmail(resetPasswordDto.email)
     if (!user) {

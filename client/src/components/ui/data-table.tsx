@@ -76,13 +76,27 @@ export function DataTable<TData, TValue>({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
+    ...(pagination ? { getPaginationRowModel: getPaginationRowModel() } : {}),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     state: {
       columnVisibility,
-      globalFilter
-    }
+      globalFilter,
+      ...(pagination
+        ? {
+            pagination: {
+              pageSize: pagination.pageSize,
+              pageIndex: pagination.current - 1
+            }
+          }
+        : {})
+    },
+    ...(pagination
+      ? {
+          manualPagination: true,
+          pageCount: Math.ceil(pagination.total / pagination.pageSize)
+        }
+      : {})
   })
 
   const handlePrint = () => {
@@ -141,7 +155,7 @@ export function DataTable<TData, TValue>({
           className='max-w-sm'
           disabled={isLoading}
         />
-        <div className='flex gap-3 items-center'>
+        <div className='flex items-center gap-3'>
           <Button
             variant='outline'
             size='icon'
@@ -234,8 +248,8 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
       {pagination && (
-        <div className='flex justify-between items-center'>
-          <div className='flex gap-2 items-center text-sm text-gray-500'>
+        <div className='flex items-center justify-between'>
+          <div className='flex items-center gap-2 text-sm text-gray-500'>
             <span>Hiển thị</span>
             <Select
               value={pagination.pageSize.toString()}
@@ -254,7 +268,7 @@ export function DataTable<TData, TValue>({
             </Select>
             <span>dòng / trang</span>
           </div>
-          <div className='flex gap-2 items-center'>
+          <div className='flex items-center gap-2'>
             <span className='text-sm text-gray-500'>
               Trang {pagination.current} / {Math.ceil(pagination.total / pagination.pageSize)}
             </span>

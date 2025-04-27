@@ -77,7 +77,7 @@ export const columns = (onViewUser: (user: User) => void): ColumnDef<User>[] => 
       }
 
       return (
-        <div className='flex gap-1 items-center'>
+        <div className='flex items-center gap-1'>
           <span className='font-mono text-xs truncate' title={id}>
             {id.substring(0, 8)}...
           </span>
@@ -108,12 +108,12 @@ export const columns = (onViewUser: (user: User) => void): ColumnDef<User>[] => 
       return gender === 'male' ? 'Nam' : gender === 'female' ? 'Nữ' : 'Khác'
     }
   },
-  {
-    accessorFn: (row) => row?.profile?.address || '',
-    header: 'Địa chỉ',
-    meta: { className: 'text-center min-w-[250px]' },
-    id: 'address'
-  },
+  // {
+  //   accessorFn: (row) => row?.profile?.address || '',
+  //   header: 'Địa chỉ',
+  //   meta: { className: 'text-center min-w-[250px]' },
+  //   id: 'address'
+  // },
   {
     accessorFn: (row) => row?.profile?.phone || '',
     header: 'Số điện thoại',

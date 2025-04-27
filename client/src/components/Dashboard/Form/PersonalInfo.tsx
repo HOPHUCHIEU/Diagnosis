@@ -40,8 +40,8 @@ const personalInfoSchema = yup.object().shape({
     .string()
     .oneOf(['male', 'female'] as const)
     .required('Vui lòng chọn giới tính'),
-  birth: yup.date().nullable(),
-  address: yup.string()
+  birth: yup.date().nullable()
+  // address: yup.string()
 }) as yup.ObjectSchema<PersonalInfoInput>
 
 export default function PersonalInfo({ user }: Props) {
@@ -86,14 +86,14 @@ export default function PersonalInfo({ user }: Props) {
 
   return (
     <div className='space-y-6'>
-      <div className='flex justify-between items-center'>
-        <p className='font-semibold tracking-tight leading-none'>Thông tin cá nhân</p>
+      <div className='flex items-center justify-between'>
+        <p className='font-semibold leading-none tracking-tight'>Thông tin cá nhân</p>
         <Button variant='outline' size='sm' onClick={() => setIsEditing(!isEditing)}>
           {isEditing ? (
             'Hủy'
           ) : (
             <>
-              <Pencil className='mr-2 w-4 h-4' />
+              <Pencil className='w-4 h-4 mr-2' />
               Chỉnh sửa
             </>
           )}
@@ -210,7 +210,7 @@ export default function PersonalInfo({ user }: Props) {
             )}
           />
 
-          <FormField
+          {/* <FormField
             control={form.control}
             name='address'
             render={({ field }) => (
@@ -222,10 +222,10 @@ export default function PersonalInfo({ user }: Props) {
                 <FormMessage />
               </FormItem>
             )}
-          />
+          /> */}
 
           {isEditing && (
-            <div className='flex gap-4 justify-center'>
+            <div className='flex justify-center gap-4'>
               <Button effect='ringHover' type='submit' disabled={isLoading}>
                 {isLoading ? 'Đang cập nhật...' : 'Cập nhật'}
               </Button>
