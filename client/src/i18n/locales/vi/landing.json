@@ -107,5 +107,215 @@
       "resendSuccess": "Đã gửi lại mã xác thực",
       "resendError": "Không thể gửi lại mã. Vui lòng thử lại sau"
     }
+  },
+  "howItWorks": {
+    "title": "Cách Thức Hoạt Động",
+    "subtitle": "Quy trình đơn giản để kết nối với bác sĩ và nhận tư vấn y tế chất lượng cao",
+    "steps": {
+      "step1": {
+        "title": "Đặt Lịch Hẹn",
+        "description": "Chọn bác sĩ chuyên khoa phù hợp và dễ dàng đặt lịch hẹn trực tuyến."
+      },
+      "step2": {
+        "title": "Tư Vấn Trực Tuyến",
+        "description": "Kết nối với bác sĩ thông qua cuộc gọi video an toàn và riêng tư, không cần rời khỏi nhà."
+      },
+      "step3": {
+        "title": "Nhận Chẩn Đoán",
+        "description": "Bác sĩ sẽ tư vấn, chẩn đoán và đưa ra phương pháp điều trị phù hợp."
+      },
+      "step4": {
+        "title": "Theo Dõi",
+        "description": "Đặt lịch tái khám để bác sĩ theo dõi tình trạng sức khỏe theo khuyến nghị."
+      }
+    }
+  },
+  "about": {
+    "title": "Về DiagnosisIQ",
+    "description": "DiagnosisIQ - Đối Tác Y Tế Đáng Tin Cậy",
+    "subtitle": "Nâng cao chất lượng chăm sóc sức khỏe thông qua công nghệ tiên tiến và tư vấn y tế chuyên nghiệp",
+    "mission": {
+      "title": "Sứ Mệnh",
+      "description": "DiagnosisIQ hướng đến việc kết nối bệnh nhân và chuyên gia y tế thông qua công nghệ đổi mới. Chúng tôi cung cấp dịch vụ tư vấn y tế chất lượng cao, dễ tiếp cận và tận dụng AI để nâng cao độ chính xác trong chẩn đoán.",
+      "learnMore": "Tìm hiểu thêm về dịch vụ"
+    },
+    "features": {
+      "title": "Tại Sao Chọn Chúng Tôi",
+      "experts": "Đội Ngũ Y Tế Chuyên Nghiệp",
+      "expertsDesc": "Tiếp cận với đội ngũ bác sĩ và chuyên gia y tế có trình độ cao",
+      "availability": "Hỗ Trợ 24/7",
+      "availabilityDesc": "Dịch vụ hỗ trợ và tư vấn y tế liên tục 24/7",
+      "ai": "Công Nghệ Tiên Tiến",
+      "aiDesc": "Trang thiết bị chẩn đoán hiện đại và giải pháp ứng dụng AI",
+      "patientCare": "Chăm Sóc Tập Trung",
+      "patientCareDesc": "Phương pháp điều trị cá nhân hóa và chăm sóc tận tâm",
+      "facilities": "Cơ Sở Vật Chất Hiện Đại",
+      "facilitiesDesc": "Trang thiết bị y tế đầy đủ với công nghệ mới nhất",
+      "compassion": "Chăm Sóc Chu Đáo",
+      "compassionDesc": "Trải nghiệm y tế đồng cảm và hỗ trợ tận tình"
+    },
+    "stats": {
+      "patients": "Bệnh Nhân Đã Phục Vụ",
+      "experts": "Chuyên Gia Y Tế",
+      "support": "Hỗ Trợ Liên Tục",
+      "satisfaction": "Sự Hài Lòng"
+    },
+    "contact": {
+      "title": "Liên Hệ",
+      "description": "Có thắc mắc về dịch vụ của chúng tôi? Chúng tôi sẵn sàng hỗ trợ bạn.",
+      "getInTouch": "Liên Hệ Ngay"
+    }
+  },
+  "services": {
+    "title": "Dịch Vụ Y Tế",
+    "subtitle": "Chúng tôi cung cấp dịch vụ chăm sóc sức khỏe toàn diện với đội ngũ bác sĩ chuyên khoa giàu kinh nghiệm",
+    "items": {
+      "cardiology": {
+        "title": "Tim Mạch",
+        "description": "Chăm sóc chuyên sâu về tim và các bệnh lý tim mạch"
+      },
+      "general": {
+        "title": "Y Học Tổng Quát",
+        "description": "Chăm sóc sức khỏe tổng thể toàn diện"
+      },
+      "neurology": {
+        "title": "Thần Kinh",
+        "description": "Điều trị chuyên sâu các rối loạn thần kinh"
+      },
+      "ophthalmology": {
+        "title": "Nhãn Khoa",
+        "description": "Chăm sóc mắt và điều trị thị giác tiên tiến"
+      },
+      "immunology": {
+        "title": "Miễn Dịch",
+        "description": "Điều trị các rối loạn hệ miễn dịch"
+      },
+      "pediatrics": {
+        "title": "Nhi Khoa",
+        "description": "Chăm sóc sức khỏe chuyên biệt cho trẻ em"
+      }
+    },
+    "hero": {
+      "title": "Dịch Vụ Y Tế",
+      "subtitle": "Giải Pháp Chăm Sóc Sức Khỏe Toàn Diện"
+    },
+    "specialties": {
+      "title": "Chuyên Khoa",
+      "neurology": {
+        "title": "Thần Kinh",
+        "description": "Chăm sóc chuyên sâu các rối loạn và bệnh lý thần kinh",
+        "items": [
+          "Điều trị đau đầu và đau nửa đầu",
+          "Phòng ngừa và điều trị đột quỵ",
+          "Kiểm soát động kinh",
+          "Rối loạn vận động",
+          "Bệnh thần kinh cơ"
+        ]
+      },
+      "cardiology": {
+        "title": "Tim Mạch",
+        "description": "Chăm sóc toàn diện về tim và mạch máu",
+        "items": [
+          "Điều trị bệnh tim",
+          "Kiểm soát huyết áp cao",
+          "Phục hồi chức năng tim",
+          "Rối loạn nhịp tim",
+          "Tim mạch dự phòng"
+        ]
+      },
+      "orthopedics": {
+        "title": "Chỉnh Hình",
+        "description": "Chăm sóc chuyên sâu về xương khớp và cơ",
+        "items": [
+          "Phẫu thuật thay khớp",
+          "Điều trị chấn thương thể thao",
+          "Chăm sóc cột sống",
+          "Điều trị gãy xương",
+          "Phục hồi chức năng"
+        ]
+      },
+      "pediatrics": {
+        "title": "Nhi Khoa",
+        "description": "Chăm sóc sức khỏe và phát triển trẻ em",
+        "items": [
+          "Đánh giá phát triển trẻ",
+          "Chương trình tiêm chủng",
+          "Cấp cứu nhi khoa",
+          "Theo dõi tăng trưởng",
+          "Sức khỏe tâm thần"
+        ]
+      },
+      "ophthalmology": {
+        "title": "Nhãn Khoa",
+        "description": "Điều trị và chăm sóc mắt tiên tiến",
+        "items": [
+          "Khám mắt tổng quát",
+          "Phẫu thuật đục thủy tinh thể",
+          "Điều trị glaucoma",
+          "Bệnh lý võng mạc",
+          "Chỉnh tật khúc xạ"
+        ]
+      },
+      "internal": {
+        "title": "Nội Khoa",
+        "description": "Dịch vụ chăm sóc sức khỏe người lớn toàn diện",
+        "items": [
+          "Quản lý bệnh mạn tính",
+          "Chăm sóc dự phòng",
+          "Sức khỏe tiêu hóa",
+          "Chăm sóc hô hấp",
+          "Rối loạn nội tiết"
+        ]
+      }
+    }
+  },
+  "listDoctor": {
+    "title": "Đặt Lịch Hẹn Trực Tuyến",
+    "subtitle": "Đặt lịch với các bác sĩ chuyên khoa hàng đầu, tiết kiệm thời gian chờ đợi",
+    "search": "Tìm theo tên bác sĩ hoặc chuyên khoa...",
+    "noResults": "Không tìm thấy bác sĩ phù hợp với tìm kiếm của bạn",
+    "experience": "năm kinh nghiệm",
+    "bookAppointment": "Đặt Lịch Hẹn"
+  },
+  "contact": {
+    "hero": {
+      "title": "Liên Hệ",
+      "subtitle": "Bạn có câu hỏi hoặc cần hỗ trợ? Hãy liên hệ với chúng tôi!"
+    },
+    "form": {
+      "title": "Gửi Tin Nhắn",
+      "name": "Họ và Tên",
+      "email": "Địa Chỉ Email",
+      "phone": "Số Điện Thoại",
+      "subject": "Tiêu Đề",
+      "message": "Nội Dung",
+      "submit": "Gửi Tin Nhắn",
+      "success": "Tin nhắn của bạn đã được gửi thành công!",
+      "error": "Không thể gửi tin nhắn. Vui lòng thử lại."
+    },
+    "info": {
+      "title": "Thông Tin Liên Hệ",
+      "address": {
+        "label": "Địa Chỉ",
+        "value": "120 Hoàng Minh Thảo, Đà Nẵng"
+      },
+      "email": {
+        "label": "Email",
+        "value": "diagnosisiq@gmail.com"
+      },
+      "phone": {
+        "label": "Điện Thoại",
+        "value": "(+84) 356 241 423"
+      },
+      "hours": {
+        "label": "Giờ Làm Việc",
+        "value": "Thứ 2 - Thứ 7: 8:00 - 20:00"
+      }
+    }
+  },
+  "validation": {
+    "required": "Vui lòng nhập {{field}}",
+    "email": "Email không hợp lệ",
+    "phone": "Số điện thoại không hợp lệ"
   }
 }

@@ -107,5 +107,187 @@
       "resendSuccess": "Verification code has been sent",
       "resendError": "Couldn't resend code. Please try again later"
     }
+  },
+  "howItWorks": {
+    "title": "How It Works",
+    "subtitle": "Simple process to connect with doctors and receive high-quality medical consultation",
+    "steps": {
+      "step1": {
+        "title": "Book Appointment",
+        "description": "Choose a suitable specialist and easily book an online appointment."
+      },
+      "step2": {
+        "title": "Online Consultation",
+        "description": "Connect with doctors via secure and private video call, without leaving home."
+      },
+      "step3": {
+        "title": "Get Diagnosis",
+        "description": "Doctors will consult, diagnose and provide appropriate treatment methods."
+      },
+      "step4": {
+        "title": "Follow Up",
+        "description": "Schedule follow-up appointments for doctors to monitor health conditions as recommended."
+      }
+    }
+  },
+  "about": {
+    "title": "About DiagnosisIQ",
+    "description": "DiagnosisIQ - Your Trusted Healthcare Partner",
+    "subtitle": "Empowering healthcare through advanced technology and expert medical consultation",
+    "mission": {
+      "title": "Our Mission",
+      "description": "DiagnosisIQ aims to bridge the gap between patients and healthcare professionals through innovative technology. We provide accessible, high-quality medical consultations and leverage AI to enhance diagnostic accuracy.",
+      "learnMore": "Learn more about our services"
+    },
+    "features": {
+      "title": "Why Choose Us",
+      "experts": "Expert Medical Team",
+      "expertsDesc": "Access to qualified healthcare professionals and specialists",
+      "availability": "24/7 Availability",
+      "availabilityDesc": "Round-the-clock medical support and consultation",
+      "ai": "Advanced Technology",
+      "aiDesc": "State-of-the-art diagnostic tools and AI-powered solutions",
+      "patientCare": "Patient-Centered Care",
+      "patientCareDesc": "Personalized treatment plans and focused patient care",
+      "facilities": "Modern Facilities",
+      "facilitiesDesc": "Well-equipped medical facilities with the latest technology",
+      "compassion": "Compassionate Care",
+      "compassionDesc": "Empathetic and supportive healthcare experience"
+    },
+    "stats": {
+      "patients": "Patients Served",
+      "experts": "Medical Experts",
+      "support": "Support Available",
+      "satisfaction": "Patient Satisfaction"
+    },
+    "contact": {
+      "title": "Get in Touch",
+      "description": "Have questions about our services? We're here to help you.",
+      "getInTouch": "Contact Us"
+    }
+  },
+  "services": {
+    "hero": {
+      "title": "Our Medical Services",
+      "subtitle": "Comprehensive Healthcare Solutions for Your Well-being"
+    },
+    "specialties": {
+      "title": "Our Specialties",
+      "neurology": {
+        "title": "Neurology",
+        "description": "Expert care for neurological disorders and conditions",
+        "items": [
+          "Headache and Migraine Treatment",
+          "Stroke Prevention and Care",
+          "Epilepsy Management",
+          "Movement Disorders",
+          "Neuromuscular Diseases"
+        ]
+      },
+      "cardiology": {
+        "title": "Cardiology",
+        "description": "Comprehensive heart and cardiovascular care",
+        "items": [
+          "Heart Disease Treatment",
+          "Hypertension Management",
+          "Cardiac Rehabilitation",
+          "Heart Rhythm Disorders",
+          "Preventive Cardiology"
+        ]
+      },
+      "orthopedics": {
+        "title": "Orthopedics",
+        "description": "Specialized care for bones, joints, and muscles",
+        "items": [
+          "Joint Replacement Surgery",
+          "Sports Injury Treatment",
+          "Spine Care",
+          "Fracture Treatment",
+          "Physical Rehabilitation"
+        ]
+      },
+      "pediatrics": {
+        "title": "Pediatrics",
+        "description": "Dedicated care for children's health and development",
+        "items": [
+          "Child Development Assessment",
+          "Vaccination Programs",
+          "Pediatric Emergency Care",
+          "Growth Monitoring",
+          "Behavioral Health"
+        ]
+      },
+      "ophthalmology": {
+        "title": "Ophthalmology",
+        "description": "Advanced eye care and vision treatments",
+        "items": [
+          "Comprehensive Eye Exams",
+          "Cataract Surgery",
+          "Glaucoma Treatment",
+          "Retinal Disorders",
+          "Vision Correction"
+        ]
+      },
+      "internal": {
+        "title": "Internal Medicine",
+        "description": "Comprehensive adult healthcare services",
+        "items": [
+          "Chronic Disease Management",
+          "Preventive Care",
+          "Digestive Health",
+          "Respiratory Care",
+          "Endocrine Disorders"
+        ]
+      }
+    }
+  },
+  "listDoctor": {
+    "title": "Book Online Appointments",
+    "subtitle": "Schedule appointments with leading specialists, save waiting time",
+    "search": "Search by doctor name or specialty...",
+    "noResults": "No doctors found matching your search",
+    "experience": "years of experience",
+    "bookAppointment": "Book Appointment"
+  },
+  "contact": {
+    "hero": {
+      "title": "Contact Us",
+      "subtitle": "Have questions or need assistance? Get in touch with us!"
+    },
+    "form": {
+      "title": "Send us a Message",
+      "name": "Full Name",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "subject": "Subject",
+      "message": "Your Message",
+      "submit": "Send Message",
+      "success": "Your message has been sent successfully!",
+      "error": "Failed to send message. Please try again."
+    },
+    "info": {
+      "title": "Contact Information",
+      "address": {
+        "label": "Our Location",
+        "value": "120 Hoang Minh Thao, Da Nang, Vietnam"
+      },
+      "email": {
+        "label": "Email Us",
+        "value": "diagnosisiq@gmail.com"
+      },
+      "phone": {
+        "label": "Call Us",
+        "value": "(+84) 356 241 423"
+      },
+      "hours": {
+        "label": "Working Hours",
+        "value": "Mon - Sat: 8:00 AM - 8:00 PM"
+      }
+    }
+  },
+  "validation": {
+    "required": "{{field}} is required",
+    "email": "Invalid email address",
+    "phone": "Invalid phone number format"
   }
 }

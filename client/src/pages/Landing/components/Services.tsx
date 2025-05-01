@@ -1,70 +1,141 @@
-import React from 'react'
-import { Heart, Brain, Eye, Shield, Stethoscope, Thermometer } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import {
+  Brain,
+  Bone,
+  Heart,
+  Baby,
+  Eye,
+  Pill,
+  ArrowRight
+} from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Link } from 'react-router-dom'
+import path from '@/constants/path'
 
-const ServiceCard = ({ title, description, icon: Icon }: any) => {
+export default function Services() {
+  const { t } = useTranslation('landing')
+
   return (
-    <div className='p-6 bg-white rounded-lg border border-gray-100 shadow-md transition-shadow hover:shadow-lg'>
-      <div className='flex justify-center items-center mb-4 w-12 h-12 rounded-full bg-primary/10'>
-        <Icon className='w-6 h-6 text-primary' />
+    <div className='w-full min-h-screen bg-white'>
+      {/* Hero Section */}
+      <div className='relative bg-gradient-to-b from-blue-50 to-white py-20 sm:py-32'>
+        <div className='container px-4 mx-auto max-w-7xl'>
+          <div className='text-center'>
+            <h1 className='text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl'>
+              {t('services.hero.title')}
+            </h1>
+            <p className='max-w-2xl mx-auto mt-6 text-lg text-gray-600'>
+              {t('services.hero.subtitle')}
+            </p>
+          </div>
+        </div>
       </div>
-      <h3 className='mb-2 text-xl font-semibold'>{title}</h3>
-      <p className='text-gray-600'>{description}</p>
+
+      {/* Medical Services Grid */}
+      <div className='py-20 bg-white'>
+        <div className='container px-4 mx-auto max-w-7xl'>
+          <h2 className='mb-12 text-3xl font-bold text-center text-gray-900'>{t('services.specialties.title')}</h2>
+          <div className='grid gap-8 md:grid-cols-2 lg:grid-cols-3'>
+            <div className='p-6 transition-all duration-200 bg-white border rounded-lg shadow-sm hover:shadow-md'>
+              <div className='flex items-center mb-4'>
+                <Brain className='w-8 h-8 text-blue-600' />
+                <h3 className='ml-3 text-xl font-semibold text-gray-900'>{t('services.specialties.neurology.title')}</h3>
+              </div>
+              <p className='text-gray-600'>{t('services.specialties.neurology.description')}</p>
+              <ul className='mt-4 space-y-2 text-sm text-gray-600'>
+                {t('services.specialties.neurology.items', { returnObjects: true }).map((item: string, index: number) => (
+                  <li key={index}>• {item}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div className='p-6 transition-all duration-200 bg-white border rounded-lg shadow-sm hover:shadow-md'>
+              <div className='flex items-center mb-4'>
+                <Heart className='w-8 h-8 text-blue-600' />
+                <h3 className='ml-3 text-xl font-semibold text-gray-900'>{t('services.specialties.cardiology.title')}</h3>
+              </div>
+              <p className='text-gray-600'>{t('services.specialties.cardiology.description')}</p>
+              <ul className='mt-4 space-y-2 text-sm text-gray-600'>
+                {t('services.specialties.cardiology.items', { returnObjects: true }).map((item: string, index: number) => (
+                  <li key={index}>• {item}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div className='p-6 transition-all duration-200 bg-white border rounded-lg shadow-sm hover:shadow-md'>
+              <div className='flex items-center mb-4'>
+                <Bone className='w-8 h-8 text-blue-600' />
+                <h3 className='ml-3 text-xl font-semibold text-gray-900'>{t('services.specialties.orthopedics.title')}</h3>
+              </div>
+              <p className='text-gray-600'>{t('services.specialties.orthopedics.description')}</p>
+              <ul className='mt-4 space-y-2 text-sm text-gray-600'>
+                {t('services.specialties.orthopedics.items', { returnObjects: true }).map((item: string, index: number) => (
+                  <li key={index}>• {item}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div className='p-6 transition-all duration-200 bg-white border rounded-lg shadow-sm hover:shadow-md'>
+              <div className='flex items-center mb-4'>
+                <Baby className='w-8 h-8 text-blue-600' />
+                <h3 className='ml-3 text-xl font-semibold text-gray-900'>{t('services.specialties.pediatrics.title')}</h3>
+              </div>
+              <p className='text-gray-600'>{t('services.specialties.pediatrics.description')}</p>
+              <ul className='mt-4 space-y-2 text-sm text-gray-600'>
+                {t('services.specialties.pediatrics.items', { returnObjects: true }).map((item: string, index: number) => (
+                  <li key={index}>• {item}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div className='p-6 transition-all duration-200 bg-white border rounded-lg shadow-sm hover:shadow-md'>
+              <div className='flex items-center mb-4'>
+                <Eye className='w-8 h-8 text-blue-600' />
+                <h3 className='ml-3 text-xl font-semibold text-gray-900'>{t('services.specialties.ophthalmology.title')}</h3>
+              </div>
+              <p className='text-gray-600'>{t('services.specialties.ophthalmology.description')}</p>
+              <ul className='mt-4 space-y-2 text-sm text-gray-600'>
+                {t('services.specialties.ophthalmology.items', { returnObjects: true }).map((item: string, index: number) => (
+                  <li key={index}>• {item}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div className='p-6 transition-all duration-200 bg-white border rounded-lg shadow-sm hover:shadow-md'>
+              <div className='flex items-center mb-4'>
+                <Pill className='w-8 h-8 text-blue-600' />
+                <h3 className='ml-3 text-xl font-semibold text-gray-900'>{t('services.specialties.internal.title')}</h3>
+              </div>
+              <p className='text-gray-600'>{t('services.specialties.internal.description')}</p>
+              <ul className='mt-4 space-y-2 text-sm text-gray-600'>
+                {t('services.specialties.internal.items', { returnObjects: true }).map((item: string, index: number) => (
+                  <li key={index}>• {item}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* CTA Section */}
+      <div className='py-16 bg-blue-50'>
+        <div className='container px-4 mx-auto text-center max-w-7xl'>
+          <h2 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
+            {t('listDoctor.title')}
+          </h2>
+          <p className='max-w-2xl mx-auto mt-6 text-lg text-gray-600'>
+            {t('listDoctor.subtitle')}
+          </p>
+          <div className='mt-10'>
+            <Link to={path.booking}>
+              <Button className='px-8 py-6 text-lg'>
+                {t('listDoctor.bookAppointment')}
+                <ArrowRight className='w-5 h-5 ml-2' />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
-
-const Services = () => {
-  const services = [
-    {
-      title: 'Tim Mạch',
-      description: 'Chuyên gia tim mạch hàng đầu giúp chẩn đoán và điều trị các bệnh lý tim mạch.',
-      icon: Heart
-    },
-    {
-      title: 'Nội Tổng Hợp',
-      description: 'Giải quyết các vấn đề sức khỏe tổng quát với đội ngũ bác sĩ giàu kinh nghiệm.',
-      icon: Stethoscope
-    },
-    {
-      title: 'Thần Kinh',
-      description: 'Chăm sóc và điều trị các bệnh lý thần kinh với phương pháp tiên tiến.',
-      icon: Brain
-    },
-    {
-      title: 'Nhãn Khoa',
-      description: 'Chăm sóc sức khỏe đôi mắt và điều trị các bệnh về mắt hiệu quả.',
-      icon: Eye
-    },
-    {
-      title: 'Miễn Dịch & Dị Ứng',
-      description: 'Điều trị các bệnh dị ứng và rối loạn miễn dịch với phương pháp hiện đại.',
-      icon: Shield
-    },
-    {
-      title: 'Nhi Khoa',
-      description: 'Chăm sóc sức khỏe toàn diện cho trẻ em từ sơ sinh đến tuổi vị thành niên.',
-      icon: Thermometer
-    }
-  ]
-
-  return (
-    <section className='py-16'>
-      <div className='container px-4 mx-auto'>
-        <div className='mx-auto mb-12 max-w-2xl text-center'>
-          <h2 className='mb-4 text-3xl font-bold md:text-4xl'>Dịch Vụ Y Tế</h2>
-          <p className='text-lg text-gray-600'>
-            Chúng tôi cung cấp nhiều dịch vụ y tế chuyên nghiệp với đội ngũ bác sĩ giàu kinh nghiệm
-          </p>
-        </div>
-
-        <div className='grid gap-8 md:grid-cols-2 lg:grid-cols-3'>
-          {services.map((service, index) => (
-            <ServiceCard key={index} title={service.title} description={service.description} icon={service.icon} />
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-export default Services
