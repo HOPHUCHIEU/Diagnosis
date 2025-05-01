@@ -3,7 +3,7 @@ import { CreateDoctorProfileDto } from './dto/create-doctor-profile.dto'
 import { UpdateDoctorProfileDto } from './dto/update-doctor-profile.dto'
 import { InjectModel } from '@nestjs/mongoose'
 import { DoctorProfile } from 'apps/api-service/src/account/doctor-profile/entities/doctor-profile.entity'
-import { Model } from 'mongoose'
+import { Model, Types } from 'mongoose'
 import { User } from 'apps/api-service/src/account/user/entities/user.entity'
 import { Role } from 'apps/api-service/src/auth/role.enum'
 

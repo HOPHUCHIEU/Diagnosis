@@ -138,7 +138,7 @@ class AppointmentHandler:
                 "message": "Không thể lấy thông tin lịch trống của bác sĩ."
             }
     
-    async def create_appointment(self, doctor_id, date, time, user_token=None, symptoms=None, reason=None):
+    async def create_appointment(self, doctor_id, date, time, user_token=None, user_id=None, symptoms=None, reason=None):
         try:
             # Validate required fields
             if not all([doctor_id, date, time]):
@@ -158,18 +158,25 @@ class AppointmentHandler:
             end_time = f"{end_hour:02d}:{end_minute:02d}"
             
             # Get doctor details to get consultation fee
+            print(f"Doctor ID: {doctor_id}")
             doctor_response = await self.api_client.get_doctor_profile(self._transform_id(doctor_id))
             doctor_details = doctor_response.get('data', {})
+            doctor_obj = doctor_details.get('doctor', {})
+            id = str(doctor_obj.get('_id', {}).get('buffer', {}).get('data', [])) if isinstance(doctor_obj.get('_id'), dict) else doctor_obj.get('_id')
+            print(f"11111111111111111111Doctor ID: {id}")
+            new_id = self._transform_id(id)
+            print(f"T22222222222222222222222ransformed Doctor ID: {new_id}")
             fee = doctor_details.get('consultationFee', 0)
             
             # Create appointment data
             appointment_data = {
-                "doctorId": self._transform_id(doctor_id),
+                "patient": user_id,
+                "doctor": new_id,
                 "appointmentDate": date,
                 "startTime": time,
                 "endTime": end_time,
                 "appointmentFee": fee,
-                "type": "IN_PERSON",
+                "type": "in_person",
                 "medicalInfo": {
                     "symptoms": symptoms or "",
                     "reason": reason or "Đặt lịch qua chatbot"
@@ -179,25 +186,16 @@ class AppointmentHandler:
             # Call API to create appointment
             response = await self.api_client.create_appointment(appointment_data, user_token)
             
-            if response.get('_id'):
-                # Get doctor name
-                doctor_name = "Bác sĩ"
-                if 'doctor' in response:
-                    doctor_profile = response.get('doctor', {}).get('profile', {})
-                    doctor_name = f"Bác sĩ {doctor_profile.get('firstName', '')} {doctor_profile.get('lastName', '')}"
-                
+            response_data = response.get('data', {})
+            
+            if response_data:  
                 return {
                     "success": True,
-                    "appointment_id": response.get('_id'),
-                    "doctor_id": doctor_id,
-                    "doctor_name": doctor_name,
                     "date": date,
                     "time": time,
                     "end_time": end_time,
                     "symptoms": symptoms,
                     "reason": reason,
-                    "fee": fee,
-                    "status": "confirmed",
                     "message": "Đặt lịch khám thành công!"
                 }
             else:

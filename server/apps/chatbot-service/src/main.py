@@ -18,10 +18,6 @@ class ChatbotService:
             auto_offset_reset='earliest',
             value_deserializer=lambda x: json.loads(x.decode('utf-8'))
         )
-
-        print(KAFKA_BROKERS)
-        print(self.consumer)
-        print("Kafka Consumer initialized")
         
         self.producer = KafkaProducer(
             bootstrap_servers=[KAFKA_BROKERS],
@@ -105,6 +101,12 @@ class ChatbotService:
                     result = await self.doctor_handler.get_doctors(
                         specialty=arguments.get("specialty")
                     )
+                    # print(f"--------Doctor list response: {result}")
+                    # print(f"--------Doctor list response: {result.get('doctors')[0].get('id')}")
+                    # data = await self.doctor_handler.get_doctor(
+                    #     doctor_id=result.get('doctors')[0].get('id')
+                    # )
+                    # print(f"D*************octor data: {data}")
                 
                 elif function_name == "get_doctor_availability":
                     result = await self.appointment_handler.get_doctor_availability(
@@ -113,11 +115,17 @@ class ChatbotService:
                     )
                 
                 elif function_name == "create_appointment":
+                    # data = await self.doctor_handler.get_doctor(
+                    #     doctor_id=arguments.get("doctor_id")
+                    # )
+                    # print(data)
+                    # id = data.get("doctor_id")
                     result = await self.appointment_handler.create_appointment(
                         doctor_id=arguments.get("doctor_id"),
                         date=arguments.get("date"),
                         time=arguments.get("time"),
                         user_token=user_token,
+                        user_id=user_id,
                         symptoms=arguments.get("symptoms"),
                         reason=arguments.get("reason")
                     )

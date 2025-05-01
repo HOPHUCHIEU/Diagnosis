@@ -61,16 +61,81 @@ For heart-related symptoms, suggest Cardiology (Tim mạch).
 
 ALWAYS use the appropriate function for each step in the workflow."""
 
+        # self.tools = [
+        #     {
+        #         "name": "get_doctor_list",
+        #         "description": "Get a list of doctors for a specific specialty",
+        #         "parameters": {
+        #             "type": "OBJECT",
+        #             "properties": {
+        #                 "specialty": {
+        #                     "type": "STRING",
+        #                     "description": "The medical specialty to find doctors for"
+        #                 }
+        #             },
+        #             "required": ["specialty"]
+        #         }
+        #     },
+        #     {
+        #         "name": "get_doctor_availability",
+        #         "description": "Get available time slots for a doctor on a specific date",
+        #         "parameters": {
+        #             "type": "OBJECT",
+        #             "properties": {
+        #                 "doctor_id": {
+        #                     "type": "STRING",
+        #                     "description": "The ID of the selected doctor"
+        #                 },
+        #                 "date": {
+        #                     "type": "STRING",
+        #                     "description": "The date for checking availability (YYYY-MM-DD)"
+        #                 }
+        #             },
+        #             "required": ["doctor_id", "date"]
+        #         }
+        #     },
+        #     {
+        #         "name": "create_appointment",
+        #         "description": "Create an appointment with the selected details",
+        #         "parameters": {
+        #             "type": "OBJECT",
+        #             "properties": {
+        #                 "doctor_id": {
+        #                     "type": "STRING", 
+        #                     "description": "The ID of the selected doctor"
+        #                 },
+        #                 "date": {
+        #                     "type": "STRING",
+        #                     "description": "The date for the appointment (YYYY-MM-DD)"
+        #                 },
+        #                 "time": {
+        #                     "type": "STRING",
+        #                     "description": "The time slot for the appointment (HH:MM)"
+        #                 },
+        #                 "symptoms": {
+        #                     "type": "STRING",
+        #                     "description": "The medical symptoms described by the user"
+        #                 },
+        #                 "reason": {
+        #                     "type": "STRING",
+        #                     "description": "The reason for the appointment"
+        #                 }
+        #             },
+        #             "required": ["doctor_id", "date", "time"]
+        #         }
+        #     }
+        # ]
+        
         self.tools = [
             {
                 "name": "get_doctor_list",
-                "description": "Get a list of doctors for a specific specialty",
+                "description": "Lấy danh sách bác sĩ theo chuyên khoa cụ thể",
                 "parameters": {
                     "type": "OBJECT",
                     "properties": {
                         "specialty": {
                             "type": "STRING",
-                            "description": "The medical specialty to find doctors for"
+                            "description": "Chuyên khoa y tế để tìm bác sĩ"
                         }
                     },
                     "required": ["specialty"]
@@ -78,17 +143,17 @@ ALWAYS use the appropriate function for each step in the workflow."""
             },
             {
                 "name": "get_doctor_availability",
-                "description": "Get available time slots for a doctor on a specific date",
+                "description": "Lấy các khung giờ còn trống của bác sĩ vào một ngày cụ thể",
                 "parameters": {
                     "type": "OBJECT",
                     "properties": {
                         "doctor_id": {
                             "type": "STRING",
-                            "description": "The ID of the selected doctor"
+                            "description": "ID của bác sĩ được chọn"
                         },
                         "date": {
                             "type": "STRING",
-                            "description": "The date for checking availability (YYYY-MM-DD)"
+                            "description": "Ngày kiểm tra lịch trống (YYYY-MM-DD)"
                         }
                     },
                     "required": ["doctor_id", "date"]
@@ -96,29 +161,29 @@ ALWAYS use the appropriate function for each step in the workflow."""
             },
             {
                 "name": "create_appointment",
-                "description": "Create an appointment with the selected details",
+                "description": "Tạo lịch hẹn với các thông tin đã chọn",
                 "parameters": {
                     "type": "OBJECT",
                     "properties": {
                         "doctor_id": {
                             "type": "STRING", 
-                            "description": "The ID of the selected doctor"
+                            "description": "ID của bác sĩ được chọn"
                         },
                         "date": {
                             "type": "STRING",
-                            "description": "The date for the appointment (YYYY-MM-DD)"
+                            "description": "Ngày hẹn (YYYY-MM-DD)"
                         },
                         "time": {
                             "type": "STRING",
-                            "description": "The time slot for the appointment (HH:MM)"
+                            "description": "Khung giờ cho cuộc hẹn (HH:MM)"
                         },
                         "symptoms": {
                             "type": "STRING",
-                            "description": "The medical symptoms described by the user"
+                            "description": "Các triệu chứng y tế được mô tả bởi người dùng"
                         },
                         "reason": {
                             "type": "STRING",
-                            "description": "The reason for the appointment"
+                            "description": "Lý do cuộc hẹn"
                         }
                     },
                     "required": ["doctor_id", "date", "time"]
