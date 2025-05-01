@@ -9,12 +9,13 @@ import { IoAdapter } from '@nestjs/platform-socket.io'
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
   const config: ConfigService = app.get(ConfigService)
+  const configuredBroker = config.get<string>('KAFKA_BROKERS') || 'localhost:9092'
+  const brokerAddress = configuredBroker.includes('kafka:') ? 'localhost:9092' : configuredBroker
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.KAFKA,
     options: {
       client: {
-        brokers: [config.get<string>('KAFKA_BROKERS')],
-        // brokers: ['localhost:9092'],
+        brokers: [brokerAddress],
         clientId: 'api-service',
         retry: {
           initialRetryTime: 1000,
