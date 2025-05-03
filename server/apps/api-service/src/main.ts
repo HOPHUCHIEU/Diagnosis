@@ -40,7 +40,12 @@ async function bootstrap() {
   app.use(bodyParser.json({ limit: '10mb' }))
   app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }))
   app.useWebSocketAdapter(new IoAdapter(app))
-
+  app.getHttpAdapter().get('/', (req, res) => {
+    res.send('API Server is running! Please use /api/v1 for API routes.');
+  });
+  app.getHttpAdapter().get('/favicon.ico', (req, res) => {
+    res.status(204).end();
+  });
   app.startAllMicroservices()
   console.log(`🚀 Kafka Microservice (API) is running`)
   const port: number = config.get<number>('PORT')

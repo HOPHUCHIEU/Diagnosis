@@ -29,7 +29,7 @@ const debugLog = (message: string, ...args: any[]) => {
 const validateSocketUrl = (url: string | undefined): string => {
   if (!url) {
     debugLog('⚠️ baseURLChatBotAPI không được định nghĩa trong biến môi trường, sử dụng fallback')
-    return 'http://103.69.87.243:5000/chatbot'
+    return 'http://127.0.0.1:5001/chatbot'
   }
 
   // Đảm bảo URL không kết thúc bằng dấu /
