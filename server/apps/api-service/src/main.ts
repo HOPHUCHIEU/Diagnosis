@@ -5,17 +5,20 @@ import { ClassSerializerInterceptor, ValidationPipe, VersioningType } from '@nes
 import * as bodyParser from 'body-parser'
 import { MicroserviceOptions, Transport } from '@nestjs/microservices'
 import { IoAdapter } from '@nestjs/platform-socket.io'
+import * as express from 'express'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
   const config: ConfigService = app.get(ConfigService)
-  const configuredBroker = config.get<string>('KAFKA_BROKERS') || 'localhost:9092'
-  const brokerAddress = configuredBroker.includes('kafka:') ? 'localhost:9092' : configuredBroker
+
+  // FIX lỗi favicon.ico khi browser tự động gọi (trả về 204 No Content)
+  app.use('/favicon.ico', (req, res) => res.status(204).end())
+
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.KAFKA,
     options: {
       client: {
-        brokers: [brokerAddress],
+        brokers: [config.get<string>('KAFKA_BROKERS')],
         clientId: 'api-service',
         retry: {
           initialRetryTime: 1000,
@@ -30,9 +33,11 @@ async function bootstrap() {
       }
     }
   })
+
   app.enableVersioning({
     type: VersioningType.URI
   })
+
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }))
   app.enableCors()
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)))

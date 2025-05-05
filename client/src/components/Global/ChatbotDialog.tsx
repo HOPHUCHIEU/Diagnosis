@@ -22,16 +22,20 @@ import { motion, AnimatePresence } from 'framer-motion'
 import clsx from 'clsx'
 
 interface Message {
-  role: 'user' | 'bot'
+  role: string
   content: string
   timestamp: Date
   id: string
-  isTyping?: boolean // Thêm trạng thái typing
+  isTyping?: boolean
 }
-
 interface Props {
   onClose: () => void
 }
+
+// Hằng số cho localStorage key
+const CHAT_HISTORY_KEY = 'chatbot_message_history'
+const CHAT_HISTORY_EXPIRY_KEY = 'chatbot_message_history_expiry'
+const CHAT_HISTORY_EXPIRY_DAYS = 5 // Số ngày lưu trữ lịch sử chat
 
 // Component nút restart riêng biệt để tái sử dụng
 interface RestartButtonProps {
@@ -41,6 +45,28 @@ interface RestartButtonProps {
   className?: string
   size?: 'sm' | 'md' | 'lg'
   label?: string
+}
+
+// Helper function để chuyển đổi Date thành chuỗi ISO và ngược lại
+const serializeMessages = (messages: Message[]): string => {
+  const serialized = messages.map((msg) => ({
+    ...msg,
+    timestamp: msg.timestamp.toISOString() // Chuyển Date thành chuỗi ISO
+  }))
+  return JSON.stringify(serialized)
+}
+
+const deserializeMessages = (serializedMessages: string): Message[] => {
+  try {
+    const parsed = JSON.parse(serializedMessages)
+    return parsed.map((msg: any) => ({
+      ...msg,
+      timestamp: new Date(msg.timestamp) // Chuyển chuỗi ISO thành Date
+    }))
+  } catch (error) {
+    console.error('Lỗi khi phân tích lịch sử tin nhắn:', error)
+    return []
+  }
 }
 
 const RestartButton = ({
@@ -113,6 +139,7 @@ export default function ChatbotDialog({ onClose }: Props) {
   const lastMessageRef = useRef<string>('') // Lưu trữ ID tin nhắn cuối cùng để tránh trùng lặp
   const connectionAttemptRef = useRef<number>(0) // Đếm số lần thử kết nối
   const maxRetries = 3 // Số lần thử kết nối tối đa
+  const userId = useAppSelector((state) => state.authState.user?._id) // Lấy ID người dùng để tạo key cho localStorage
 
   const BOT_RESPONSE_DELAY = 5000 // Độ trễ hiển thị tin nhắn bot (3 giây)
   const MIN_TIME_BETWEEN_MESSAGES = 3000 // Thời gian tối thiểu giữa các tin nhắn (2 giây)
@@ -121,6 +148,79 @@ export default function ChatbotDialog({ onClose }: Props) {
   const [sendMessage] = useSendMessageMutation()
   const [disconnectChatbot] = useDisconnectChatbotMutation()
   const [pingChatbot] = usePingChatbotMutation()
+
+  // Hàm lưu lịch sử chat vào localStorage
+  const saveChatHistory = useCallback(
+    (chatMessages: Message[]) => {
+      if (!isAuthen || !userId) return // Chỉ lưu khi đã đăng nhập
+
+      try {
+        // Lấy key dựa trên ID người dùng
+        const storageKey = `${CHAT_HISTORY_KEY}_${userId}`
+        const expiryKey = `${CHAT_HISTORY_EXPIRY_KEY}_${userId}`
+
+        // Tính thời điểm hết hạn (hiện tại + số ngày cấu hình)
+        const expiryDate = new Date()
+        expiryDate.setDate(expiryDate.getDate() + CHAT_HISTORY_EXPIRY_DAYS)
+
+        // Lưu lịch sử chat
+        localStorage.setItem(storageKey, serializeMessages(chatMessages))
+        localStorage.setItem(expiryKey, expiryDate.toISOString())
+      } catch (error) {
+        console.error('Lỗi khi lưu lịch sử chat:', error)
+      }
+    },
+    [isAuthen, userId]
+  )
+
+  // Hàm tải lịch sử chat từ localStorage
+  const loadChatHistory = useCallback(() => {
+    if (!isAuthen || !userId) return null // Chỉ tải khi đã đăng nhập
+
+    try {
+      // Lấy key dựa trên ID người dùng
+      const storageKey = `${CHAT_HISTORY_KEY}_${userId}`
+      const expiryKey = `${CHAT_HISTORY_EXPIRY_KEY}_${userId}`
+
+      // Kiểm tra thời gian hết hạn
+      const expiryDateStr = localStorage.getItem(expiryKey)
+      if (expiryDateStr) {
+        const expiryDate = new Date(expiryDateStr)
+        const now = new Date()
+
+        // Nếu đã hết hạn, xóa lịch sử cũ
+        if (now > expiryDate) {
+          localStorage.removeItem(storageKey)
+          localStorage.removeItem(expiryKey)
+          return null
+        }
+      }
+
+      // Tải lịch sử tin nhắn
+      const savedHistory = localStorage.getItem(storageKey)
+      if (savedHistory) {
+        return deserializeMessages(savedHistory)
+      }
+    } catch (error) {
+      console.error('Lỗi khi tải lịch sử chat:', error)
+    }
+    return null
+  }, [isAuthen, userId])
+
+  // Xóa lịch sử chat
+  const clearChatHistory = useCallback(() => {
+    if (!isAuthen || !userId) return
+
+    try {
+      const storageKey = `${CHAT_HISTORY_KEY}_${userId}`
+      const expiryKey = `${CHAT_HISTORY_EXPIRY_KEY}_${userId}`
+
+      localStorage.removeItem(storageKey)
+      localStorage.removeItem(expiryKey)
+    } catch (error) {
+      console.error('Lỗi khi xóa lịch sử chat:', error)
+    }
+  }, [isAuthen, userId])
 
   // Debug log helper
   const debugLog = useCallback((message: string, ...args: any[]) => {
@@ -344,7 +444,7 @@ export default function ChatbotDialog({ onClose }: Props) {
     processingMessageRef.current = false
 
     // Xóa trạng thái tin nhắn hiện tại
-    setMessages([
+    const newMessages = [
       {
         role: 'bot',
         content: 'Cuộc trò chuyện đã được khởi động lại.',
@@ -356,7 +456,11 @@ export default function ChatbotDialog({ onClose }: Props) {
         timestamp: new Date(),
         id: `welcome-${Date.now()}`
       }
-    ])
+    ]
+    setMessages(newMessages)
+
+    // Xóa lịch sử chat cũ khi restart
+    clearChatHistory()
 
     // Reset các trạng thái khác
     setIsLoading(false)
@@ -370,7 +474,7 @@ export default function ChatbotDialog({ onClose }: Props) {
     }
 
     return true
-  }, [debugLog])
+  }, [debugLog, clearChatHistory])
 
   // Thiết lập kết nối socket khi component mount và thử lại khi thất bại
   useEffect(() => {
@@ -475,6 +579,23 @@ export default function ChatbotDialog({ onClose }: Props) {
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
+
+  // Load lịch sử chat khi component mount
+  useEffect(() => {
+    const savedMessages = loadChatHistory()
+    if (savedMessages && savedMessages.length > 0) {
+      setMessages(savedMessages)
+      debugLog('Đã tải lịch sử chat từ localStorage')
+    }
+  }, [loadChatHistory, debugLog])
+
+  // Lưu lịch sử chat khi messages thay đổi
+  useEffect(() => {
+    // Chỉ lưu lịch sử khi có nhiều hơn tin nhắn chào mừng mặc định
+    if (messages.length > 1) {
+      saveChatHistory(messages)
+    }
+  }, [messages, saveChatHistory])
 
   useEffect(() => {
     scrollToBottom()

@@ -17,7 +17,7 @@ import { ConfigService } from '@nestjs/config'
   cors: {
     origin: '*'
   },
-  port: 5001,
+  port: 5000,
   namespace: 'chatbot'
 })
 export class ChatbotGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {

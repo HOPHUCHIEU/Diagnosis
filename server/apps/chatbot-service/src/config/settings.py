@@ -6,7 +6,7 @@ try:
 except:
     pass 
 
-KAFKA_BROKERS = os.getenv("KAFKA_BROKERS", "kafka-diagnosis:9092")
+KAFKA_BROKERS = os.getenv("KAFKA_BROKERS", "localhost:9092")
 KAFKA_TOPIC_INBOUND = os.getenv("KAFKA_TOPIC_INBOUND", "chat-messages")
 KAFKA_TOPIC_OUTBOUND = os.getenv("KAFKA_TOPIC_OUTBOUND", "chat-responses")
 KAFKA_GROUP_ID = os.getenv("KAFKA_GROUP_ID", "chatbot-consumer")
@@ -24,5 +24,5 @@ REDIS_DB = os.getenv("REDIS_DB", 0)
 REDIS_PASSWORD = os.getenv("REDIS_PASSWORD", "")
 REDIS_CHAT_TTL = os.getenv("REDIS_CHAT_TTL", 3600)  # 1 hour
 
-API_BASE_URL = os.environ.get("API_BASE_URL", "http://103.69.87.243:5000/api/v1")
+API_BASE_URL = os.environ.get("API_BASE_URL", "http://127.0.0.1:5001/api/v1")
 API_TOKEN = os.environ.get("API_TOKEN", "")

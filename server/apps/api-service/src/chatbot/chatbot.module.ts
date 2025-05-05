@@ -21,29 +21,22 @@ import { JwtModule } from '@nestjs/jwt'
       {
         name: 'KAFKA_CLIENT',
         imports: [ConfigModule],
-        useFactory: (configService: ConfigService) => {
-          const configuredBroker = configService.get<string>('KAFKA_BROKERS') || 'localhost:9092'
-          console.log(`DEBUG: ChatbotModule - Original broker: ${configuredBroker}`)
-
-          const brokerAddress = 'localhost:9092' // Force localhost
-          console.log(`DEBUG: ChatbotModule - Using broker: ${brokerAddress}`)
-          return {
-            transport: Transport.KAFKA,
-            options: {
-              client: {
-                clientId: 'api-chatbot',
-                brokers: [brokerAddress],
-                retry: {
-                  initialRetryTime: 1000,
-                  retries: 10
-                }
-              },
-              consumer: {
-                groupId: 'api-chatbot-consumer'
+        useFactory: (configService: ConfigService) => ({
+          transport: Transport.KAFKA,
+          options: {
+            client: {
+              clientId: 'api-chatbot',
+              brokers: [configService.get<string>('KAFKA_BROKERS')],
+              retry: {
+                initialRetryTime: 1000,
+                retries: 10
               }
+            },
+            consumer: {
+              groupId: 'api-chatbot-consumer'
             }
           }
-        },
+        }),
         inject: [ConfigService]
       }
     ])
