@@ -10,7 +10,16 @@ export const SPECIALTIES = [
   'Mắt',
   'Tai mũi họng',
   'Răng hàm mặt',
-  'Ung bướu'
+  'Ung bướu',
+  'Nội tiêu hóa',
+  'Hồi sức cấp cứu',
+  'Chấn thương chỉnh hình',
+  'Tim mạch',
+  'Khoa nội thận - tiết niệu',
+  'Khoa nội tiết',
+  'Khoa hô hấp',
+  'Gây mê hồi sức',
+  'Khoa xét nghiệm'
 ] as const
 
 export const DEGREES = [
