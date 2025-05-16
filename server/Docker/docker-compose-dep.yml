@@ -91,7 +91,7 @@ services:
           cpus: '0.5'
 
   chatbot:
-    image: viethung20101/diagnosis-chatbot:latest
+    image: hophuchieu135/diagnosis-chatbot:latest
     build:
       context: ..
       dockerfile: ./apps/chatbot-service/Dockerfile
@@ -130,13 +130,13 @@ services:
           cpus: '0.5'
 
   api:
-    image: viethung20101/diagnosis-api:latest
+    image: hophuchieu135/diagnosis-api:latest
     build:
       context: ..
       dockerfile: ./apps/api-service/Dockerfile
     container_name: diagnosis-api
     ports:
-      - '5000:5000'
+      - '5001:5001'
     env_file:
       - .env.docker
     networks:

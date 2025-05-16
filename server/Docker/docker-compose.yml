@@ -93,7 +93,7 @@ services:
           cpus: '0.5'
 
   chatbot:
-    image: viethung20101/diagnosis-chatbot:latest
+    image: hophuchieu135/diagnosis-chatbot:latest
     build:
       context: ..
       dockerfile: ./apps/chatbot-service/Dockerfile
@@ -116,7 +116,7 @@ services:
       - REDIS_DB=0
       - REDIS_PASSWORD=
       - REDIS_CHAT_TTL=86400
-      - API_BASE_URL=http://BASE_URL=http://127.0.0.1:5001/api/v1
+      - API_BASE_URL=http://127.0.0.1:5001/api/v1
       - GEMINI_API_KEY= AIzaSyAC_OVQWN7K9_6mRULTQE9-8XiOCaKrtc4
     volumes:
       - ./apps/chatbot-service/chat_history:/app/chat_history
@@ -133,7 +133,7 @@ services:
           cpus: '0.5'
 
   api:
-    image: viethung20101/diagnosis-api:latest
+    image: hophuchieu135/diagnosis-api:latest
     build:
       context: ..
       dockerfile: ./apps/api-service/Dockerfile
