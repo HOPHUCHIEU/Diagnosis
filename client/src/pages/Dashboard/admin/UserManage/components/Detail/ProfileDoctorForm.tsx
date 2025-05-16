@@ -22,6 +22,7 @@ import { Separator } from '@/components/ui/separator'
 import { PlusCircle, X } from 'lucide-react'
 import { CreateDoctorProfileInput } from '@/types/doctor.type'
 import { LANGUAGES, SPECIALTIES } from '@/constants/schedules.doctor'
+import { useGetAllUserQuery } from '@/redux/services/userApi'
 
 interface Props {
   user: User
@@ -35,6 +36,7 @@ export default function ProfileDoctorForm({ user, onClose }: Props) {
   )
   const [createProfile, { isLoading: isCreating }] = useCreateDoctorProfileMutation()
   const [updateProfile, { isLoading: isUpdating }] = useUpdateDoctorProfileMutation()
+  const { refetch } = useGetAllUserQuery(null)
 
   const form = useForm<DoctorProfileSchema>({
     resolver: yupResolver(doctorProfileSchema),
@@ -100,7 +102,7 @@ export default function ProfileDoctorForm({ user, onClose }: Props) {
           ...(data as CreateDoctorProfileInput),
           doctorId: bufferToHex(user._id)
         }).unwrap()
-
+        refetch()
         toast.success(CustomNotification, {
           data: {
             title: 'Thành công!',
@@ -117,7 +119,7 @@ export default function ProfileDoctorForm({ user, onClose }: Props) {
   if (isLoadingProfile) {
     return (
       <div className='flex items-center justify-center min-h-[200px]'>
-        <div className='w-8 h-8 rounded-full border-b-2 animate-spin border-primary'></div>
+        <div className='w-8 h-8 border-b-2 rounded-full animate-spin border-primary'></div>
       </div>
     )
   }
@@ -234,7 +236,7 @@ export default function ProfileDoctorForm({ user, onClose }: Props) {
 
         {/* Education Section */}
         <div className='space-y-8'>
-          <div className='flex justify-between items-center'>
+          <div className='flex items-center justify-between'>
             <h3 className='text-lg font-semibold'>Học vấn</h3>
             <Button
               type='button'
@@ -248,7 +250,7 @@ export default function ProfileDoctorForm({ user, onClose }: Props) {
                 ])
               }}
             >
-              <PlusCircle className='mr-2 w-4 h-4' />
+              <PlusCircle className='w-4 h-4 mr-2' />
               Thêm học vấn
             </Button>
           </div>
@@ -333,7 +335,7 @@ export default function ProfileDoctorForm({ user, onClose }: Props) {
 
         {/* Certificates Section */}
         <div className='space-y-8'>
-          <div className='flex justify-between items-center'>
+          <div className='flex items-center justify-between'>
             <h3 className='text-lg font-semibold'>Chứng chỉ</h3>
             <Button
               type='button'
@@ -352,7 +354,7 @@ export default function ProfileDoctorForm({ user, onClose }: Props) {
                 ])
               }}
             >
-              <PlusCircle className='mr-2 w-4 h-4' />
+              <PlusCircle className='w-4 h-4 mr-2' />
               Thêm chứng chỉ
             </Button>
           </div>
@@ -534,7 +536,7 @@ export default function ProfileDoctorForm({ user, onClose }: Props) {
           )}
         />
 
-        <div className='flex gap-4 justify-center'>
+        <div className='flex justify-center gap-4'>
           <Button effect='ringHover' className='min-w-[150px]' type='submit' disabled={isCreating || isUpdating}>
             {isCreating || isUpdating ? 'Đang xử lý...' : doctorProfile?.data ? 'Cập nhật hồ sơ' : 'Tạo hồ sơ'}
           </Button>
