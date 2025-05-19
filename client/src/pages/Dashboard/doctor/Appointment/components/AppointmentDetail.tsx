@@ -1023,8 +1023,7 @@ export default function AppointmentDetail({ appointmentId, onClose }: Props) {
             <p className='mb-3 text-sm text-red-700'>
               Nếu bạn muốn hủy lịch hẹn này, vui lòng nhấn nút bên dưới và cung cấp lý do hủy lịch. Bệnh nhân sẽ nhận
               được thông báo về việc hủy lịch hẹn.
-            </p>
-            <Button variant='destructive' onClick={() => setShowCancelForm(!showCancelForm)}>
+            </p>            <Button variant='destructive' onClick={() => setShowCancelForm(true)}>
               <X className='w-4 h-4 mr-2' /> Hủy lịch hẹn
             </Button>
           </div>

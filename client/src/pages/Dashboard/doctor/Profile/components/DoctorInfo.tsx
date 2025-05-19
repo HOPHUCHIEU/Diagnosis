@@ -77,7 +77,7 @@ export default function DoctorInfo({ user, doctorProfile, loadingDoctorProfile }
     <div className='space-y-6'>
       <div className='flex items-center justify-between'>
         <p className='font-semibold leading-none tracking-tight'>Thông tin bác sĩ</p>
-        <Button variant='outline' size='sm' onClick={() => setIsEditing(!isEditing)}>
+        {/* <Button variant='outline' size='sm' onClick={() => setIsEditing(!isEditing)}>
           {isEditing ? (
             'Hủy'
           ) : (
@@ -86,7 +86,7 @@ export default function DoctorInfo({ user, doctorProfile, loadingDoctorProfile }
               Chỉnh sửa
             </>
           )}
-        </Button>
+        </Button> */}
       </div>
 
       <Form {...form}>
