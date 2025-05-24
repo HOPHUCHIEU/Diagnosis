@@ -93,7 +93,7 @@ services:
           cpus: '0.5'
 
   chatbot:
-    image: hophuchieu135/diagnosis-chatbot:latest
+    image: viethung20101/diagnosis-chatbot:latest
     build:
       context: ..
       dockerfile: ./apps/chatbot-service/Dockerfile
