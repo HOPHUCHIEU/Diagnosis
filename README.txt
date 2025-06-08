@@ -62,7 +62,7 @@ MONGO_COLLECTION=clinic
 JWT_SECRET_KEY=951f680da7dad9f12a092f068301d69d9157491d77232a46613d78b93321fcb1
 MAIL_HOST=smtp.gmail.com
 MAIL_USER=hophuchieu135@gmail.com
-MAIL_PASSWORD=moxvjuereigyegkb
+MAIL_PASSWORD=nhập khóa google 
 MAIL_FROM=hophuchieu135@gmail.com
 MAIL_SECURE=true
 MAIL_PORT=465
@@ -76,7 +76,7 @@ CLIENT_URL=http://localhost:5173
 
 API_SERVICE_URL=http://127.0.0.1:5001/api/v1
 
-GEMINI_API_KEY=AIzaSyAPHDKIJwdK59vyJMlsYBxLLBRXE3_rQK0
+GEMINI_API_KEY=nhập API key của gemini
 GEMINI_MODEL=gemini-1.5-pro
 
 KAFKA_TOPIC_INBOUND=chat-messages
